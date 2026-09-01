@@ -20,21 +20,26 @@ namespace Chunity.Core
             get => _textResource;
         }
 
-        public ChuEngine(EngineSetting setting) : base()
+        public ChuEngine(EngineSetting setting, Transform parent) : base()
         {
-            _root = new GameObject("ChuEngine");
+            if (parent == null)
+                _root = new GameObject("ChuEngine");
+            else
+                _root = parent.gameObject;
+
             _textResource = new();
+            new UIManager(setting.UIFilePathFormat);
             var json = ExternalFolderHandler.GetLanguagesTextFile(setting.Language);
             _textResource.LoadTexts(JsonConvert.DeserializeObject<Dictionary<string, string>>(json));
-            new UIManager(setting.UIFilePathFormat);
 
             if (setting.UseCollision == true)
                 _collisionSys = RunCollisionSystem(setting.CollisionBound, setting.Capacity);
         }
 
-        public static void Run(EngineSetting setting)
+
+        public static void Run(EngineSetting setting, Transform parent = null)
         {
-            new ChuEngine(setting);
+            new ChuEngine(setting, parent);
         }
 
         private NyanCollisonSystem RunCollisionSystem(RectBound bound, int capacity)

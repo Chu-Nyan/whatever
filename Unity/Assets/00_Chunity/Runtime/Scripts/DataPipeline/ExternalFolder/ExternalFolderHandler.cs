@@ -6,7 +6,7 @@ namespace Chunity.DataPipeline
     public static class ExternalFolderHandler
     {
 #if UNITY_EDITOR
-        public static readonly string ExternalFolder = Path.Combine(Application.dataPath, "Pack/Runtime/Chunity/Setting", ExternalFolderName);
+        public static readonly string ExternalFolder = Path.Combine(Application.dataPath, "00_Chunity/Runtime/Settings", ExternalFolderName);
 #elif UNITY_IOS || UNITY_ANDROID
     public static readonly string ExternalFolder = Application.persistentDataPath;
 #else

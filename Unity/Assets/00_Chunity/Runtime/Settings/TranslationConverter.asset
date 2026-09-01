@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a285cde234aa6244c93d5babdeae659c, type: 3}
+  m_Name: TranslationConverter
+  m_EditorClassIdentifier: 
+  Config:
+    _headerRow: 1
+    _keyColumn: 1
+    _firstDataRow: 2
+    GeneratePath: {fileID: 102900000, guid: dc94c81f4bae59042abe04b75a98fc26, type: 3}
+  ExcelLoader:
+    _googleSheetID: 1_L5oI6iWKHcErj_0y4aHXAfhI-y9Cxt_DowEmF6iRAs

@@ -1,2 +1,4 @@
 ﻿<Solution>
+  <Project Path="Chunity.Runtime.csproj" />
+  <Project Path="Chunity.Editor.csproj" />
 </Solution>

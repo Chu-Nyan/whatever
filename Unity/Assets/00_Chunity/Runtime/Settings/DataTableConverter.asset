@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a32cf831169ad24bac47d6d60f9d7bc, type: 3}
+  m_Name: DataTableConverter
+  m_EditorClassIdentifier: Assembly-CSharp::Chunity.DataPipeline.DataTableConverter
+  GoogleLoader:
+    GoogleSheetID: 1ojmQBCvXK5TKlW2udlV2d20fCiHIF0YDpcipESKKokc
+    LastSync: "2026-09-01 \uC624\uD6C4 12:22:57"
+    Export: {fileID: 102900000, guid: f6d90e5d02d8aca4da1133b52bbaf240, type: 3}
+  Config:
+    _nameRow: 1
+    _typeRow: 2
+    _dataStartRow: 4
+    DefaultDtoScriptPath: {fileID: 102900000, guid: aec49ced3de38854ba536bcaaf9fecab, type: 3}
+    DefaultDtoJsonPath: {fileID: 102900000, guid: aec49ced3de38854ba536bcaaf9fecab, type: 3}
+    DefaultDtoNameSpace: Chunity.DTO
+    ScriptSuffix: Dto
+    JsonSuffix: Data
+  TableByName:
+  - key: Temp
+    value:
+      NameSpace: Chunity.DTO
+      ScriptPath: {fileID: 102900000, guid: aec49ced3de38854ba536bcaaf9fecab, type: 3}
+      JsonPath: {fileID: 102900000, guid: aec49ced3de38854ba536bcaaf9fecab, type: 3}

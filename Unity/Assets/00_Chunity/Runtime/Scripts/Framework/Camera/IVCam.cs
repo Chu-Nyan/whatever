@@ -1,9 +1,9 @@
-﻿using Chunity.Core;
+using Chunity.Core;
 using Unity.Cinemachine;
 
 namespace Chunity.Framework
 {
-    public interface IVCam : IEntity
+    public interface IVCam : ISceneObject
     {
         public VCamType Type { get; }
 

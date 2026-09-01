@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Chunity.Core
 {
-    public interface IEntity
+    public interface ISceneObject
     {
         public Transform transform { get; }
         public void SetActive(bool value);

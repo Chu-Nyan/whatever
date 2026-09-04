@@ -23,6 +23,7 @@ namespace Chunity.Framework
             _action = new();
             MousePoint = new(_action.Player.MousePosition, InputEventType.Performed);
             MousePoint.RegisterPerformed(value => _mousePosition = value);
+            WASD = new(_action.Player.WASD, InputEventType.Performed | InputEventType.Canceled);
         }
 
         public void SetActive(bool value)

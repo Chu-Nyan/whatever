@@ -1,4 +1,4 @@
-﻿using Chunity.Data;
+using Chunity.Data;
 using Chunity.DataPipeline;
 using Chunity.Framework;
 using Chunity.GameSystem.Physics;
@@ -31,6 +31,9 @@ namespace Chunity.Core
             new UIManager(setting.UIFilePathFormat);
             var json = ExternalFolderHandler.GetLanguagesTextFile(setting.Language);
             _textResource.LoadTexts(JsonConvert.DeserializeObject<Dictionary<string, string>>(json));
+
+            new InputSystem();
+            InputSystem.Instance.SetActive(true);
 
             if (setting.UseCollision == true)
                 _collisionSys = RunCollisionSystem(setting.CollisionBound, setting.Capacity);

@@ -6,7 +6,6 @@ namespace Whatever.ObjectControl
     public class PlayerBrain : IBrainStrategy
     {
         private IMovementReceiver _movementReceiver;
-        private IOffenseReceiver _combatReceiver;
         private Vector2 _direction;
         private bool _isMoving;
 
@@ -24,8 +23,6 @@ namespace Whatever.ObjectControl
         {
             if (obj is IMovementReceiver movement)
                 _movementReceiver = movement;
-            if (obj is IOffenseReceiver offense)
-                _combatReceiver = offense;
         }
 
         public void Enable()

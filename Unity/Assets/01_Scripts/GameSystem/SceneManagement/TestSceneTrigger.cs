@@ -1,5 +1,7 @@
 using Chunity.Core;
+using Unity.VisualScripting;
 using UnityEngine;
+using Whatever.ObjectControl;
 
 namespace Whatever.Core
 {
@@ -7,7 +9,9 @@ namespace Whatever.Core
     {
         [SerializeField]
         private EngineSetting _engineSetting;
-
+        private ObjectController _controller;
+        [SerializeField]
+        private Character _character;
         private void Awake()
         {
             ChuEngine.Run(_engineSetting, transform.parent);
@@ -29,6 +33,8 @@ namespace Whatever.Core
 
         private void CreateInstance()
         {
+            _controller = transform.AddComponent<ObjectController>();
+            _controller.ConnectPlayerAgent(_character);
         }
 
         private void InitStatic()

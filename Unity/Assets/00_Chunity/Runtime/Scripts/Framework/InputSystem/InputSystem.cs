@@ -7,11 +7,9 @@ namespace Chunity.Framework
     {
         private readonly InputSystem_Actions _action;
         public readonly InputEvent<Vector2> MousePoint;
-        public readonly InputEvent<Vector2> WASD;
-        public readonly InputEvent LeftClick;
-        public readonly FixedInputEvent<int>[] Skills;
-
         private Vector2 _mousePosition;
+
+        public readonly PlayerActionMap Player;
 
         public Vector2 MousePosition
         {
@@ -23,7 +21,8 @@ namespace Chunity.Framework
             _action = new();
             MousePoint = new(_action.Player.MousePosition, InputEventType.Performed);
             MousePoint.RegisterPerformed(value => _mousePosition = value);
-            WASD = new(_action.Player.WASD, InputEventType.Performed | InputEventType.Canceled);
+
+            Player = new(_action.Player);
         }
 
         public void SetActive(bool value)

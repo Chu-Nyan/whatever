@@ -27,14 +27,14 @@ namespace Whatever.ObjectControl
 
         public void Enable()
         {
-            InputSystem.Instance.WASD.RegisterPerformed(SetDiection);
-            InputSystem.Instance.WASD.RegisterCanceled(SetDiection);
+            InputSystem.Instance.Player.WASD.RegisterPerformed(SetDiection);
+            InputSystem.Instance.Player.WASD.RegisterCanceled(SetDiection);
         }
 
         public void Disable()
         {
-            InputSystem.Instance.WASD.UnregisterPerformed(SetDiection);
-            InputSystem.Instance.WASD.UnregisterCanceled(SetDiection);
+            InputSystem.Instance.Player.WASD.UnregisterPerformed(SetDiection);
+            InputSystem.Instance.Player.WASD.UnregisterCanceled(SetDiection);
             SetDiection(Vector2.zero);
         }
 

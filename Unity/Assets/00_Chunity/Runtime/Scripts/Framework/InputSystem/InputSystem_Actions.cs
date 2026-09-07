@@ -195,7 +195,17 @@ namespace Chunity.Framework
                     ""priority"": 0
                 },
                 {
-                    ""name"": ""SwapSkill"",
+                    ""name"": ""Ultimate"",
+                    ""type"": ""Button"",
+                    ""id"": ""9d0d8295-eb23-4057-92af-b6a1722baf9b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""SkillSlotSwap"",
                     ""type"": ""Button"",
                     ""id"": ""0d4a4e83-902e-45fe-b4b9-b6ee6a04049b"",
                     ""expectedControlType"": """",
@@ -409,7 +419,7 @@ namespace Chunity.Framework
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwapSkill"",
+                    ""action"": ""SkillSlotSwap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -454,6 +464,17 @@ namespace Chunity.Framework
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ItemSlotB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""106b61a0-ab76-422a-9e72-b0b10926d250"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Ultimate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -535,7 +556,8 @@ namespace Chunity.Framework
             m_Player_SkillSlotB = m_Player.FindAction("SkillSlotB", throwIfNotFound: true);
             m_Player_SkillSlotC = m_Player.FindAction("SkillSlotC", throwIfNotFound: true);
             m_Player_SkillSlotD = m_Player.FindAction("SkillSlotD", throwIfNotFound: true);
-            m_Player_SwapSkill = m_Player.FindAction("SwapSkill", throwIfNotFound: true);
+            m_Player_Ultimate = m_Player.FindAction("Ultimate", throwIfNotFound: true);
+            m_Player_SkillSlotSwap = m_Player.FindAction("SkillSlotSwap", throwIfNotFound: true);
             m_Player_ItemSlotA = m_Player.FindAction("ItemSlotA", throwIfNotFound: true);
             m_Player_ItemSlotB = m_Player.FindAction("ItemSlotB", throwIfNotFound: true);
         }
@@ -628,7 +650,8 @@ namespace Chunity.Framework
         private readonly InputAction m_Player_SkillSlotB;
         private readonly InputAction m_Player_SkillSlotC;
         private readonly InputAction m_Player_SkillSlotD;
-        private readonly InputAction m_Player_SwapSkill;
+        private readonly InputAction m_Player_Ultimate;
+        private readonly InputAction m_Player_SkillSlotSwap;
         private readonly InputAction m_Player_ItemSlotA;
         private readonly InputAction m_Player_ItemSlotB;
         /// <summary>
@@ -683,9 +706,13 @@ namespace Chunity.Framework
             /// </summary>
             public InputAction @SkillSlotD => m_Wrapper.m_Player_SkillSlotD;
             /// <summary>
-            /// Provides access to the underlying input action "Player/SwapSkill".
+            /// Provides access to the underlying input action "Player/Ultimate".
             /// </summary>
-            public InputAction @SwapSkill => m_Wrapper.m_Player_SwapSkill;
+            public InputAction @Ultimate => m_Wrapper.m_Player_Ultimate;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/SkillSlotSwap".
+            /// </summary>
+            public InputAction @SkillSlotSwap => m_Wrapper.m_Player_SkillSlotSwap;
             /// <summary>
             /// Provides access to the underlying input action "Player/ItemSlotA".
             /// </summary>
@@ -750,9 +777,12 @@ namespace Chunity.Framework
                 @SkillSlotD.started += instance.OnSkillSlotD;
                 @SkillSlotD.performed += instance.OnSkillSlotD;
                 @SkillSlotD.canceled += instance.OnSkillSlotD;
-                @SwapSkill.started += instance.OnSwapSkill;
-                @SwapSkill.performed += instance.OnSwapSkill;
-                @SwapSkill.canceled += instance.OnSwapSkill;
+                @Ultimate.started += instance.OnUltimate;
+                @Ultimate.performed += instance.OnUltimate;
+                @Ultimate.canceled += instance.OnUltimate;
+                @SkillSlotSwap.started += instance.OnSkillSlotSwap;
+                @SkillSlotSwap.performed += instance.OnSkillSlotSwap;
+                @SkillSlotSwap.canceled += instance.OnSkillSlotSwap;
                 @ItemSlotA.started += instance.OnItemSlotA;
                 @ItemSlotA.performed += instance.OnItemSlotA;
                 @ItemSlotA.canceled += instance.OnItemSlotA;
@@ -800,9 +830,12 @@ namespace Chunity.Framework
                 @SkillSlotD.started -= instance.OnSkillSlotD;
                 @SkillSlotD.performed -= instance.OnSkillSlotD;
                 @SkillSlotD.canceled -= instance.OnSkillSlotD;
-                @SwapSkill.started -= instance.OnSwapSkill;
-                @SwapSkill.performed -= instance.OnSwapSkill;
-                @SwapSkill.canceled -= instance.OnSwapSkill;
+                @Ultimate.started -= instance.OnUltimate;
+                @Ultimate.performed -= instance.OnUltimate;
+                @Ultimate.canceled -= instance.OnUltimate;
+                @SkillSlotSwap.started -= instance.OnSkillSlotSwap;
+                @SkillSlotSwap.performed -= instance.OnSkillSlotSwap;
+                @SkillSlotSwap.canceled -= instance.OnSkillSlotSwap;
                 @ItemSlotA.started -= instance.OnItemSlotA;
                 @ItemSlotA.performed -= instance.OnItemSlotA;
                 @ItemSlotA.canceled -= instance.OnItemSlotA;
@@ -985,12 +1018,19 @@ namespace Chunity.Framework
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnSkillSlotD(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "SwapSkill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Ultimate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnSwapSkill(InputAction.CallbackContext context);
+            void OnUltimate(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "SkillSlotSwap" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnSkillSlotSwap(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "ItemSlotA" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

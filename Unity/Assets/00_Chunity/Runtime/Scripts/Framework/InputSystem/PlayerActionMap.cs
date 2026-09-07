@@ -19,7 +19,7 @@ namespace Chunity.Framework
             WASD = new(actions.WASD, InputEventType.Performed | InputEventType.Canceled);
             LeftClick = new(actions.LeftClick, InputEventType.Performed);
             RightClick = new(actions.RightClick, InputEventType.Performed);
-            Sprint = new(actions.Sprint, InputEventType.Performed);
+            Sprint = new(actions.Sprint, InputEventType.Performed | InputEventType.Canceled);
             Dodge = new(actions.Dodge, InputEventType.Performed);
             Skills = new FixedInputEvent<int>[]
             {

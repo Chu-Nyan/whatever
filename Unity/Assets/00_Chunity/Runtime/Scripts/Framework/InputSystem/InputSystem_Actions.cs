@@ -91,19 +91,38 @@ namespace Chunity.Framework
     ""name"": ""InputSystem_Actions"",
     ""maps"": [
         {
-            ""name"": ""Player"",
-            ""id"": ""df70fa95-8a34-4494-b137-73ab6b9c7d37"",
+            ""name"": ""Always"",
+            ""id"": ""545061aa-c14b-4b8b-bf11-e17bf3084e9d"",
             ""actions"": [
                 {
                     ""name"": ""MousePosition"",
                     ""type"": ""Value"",
-                    ""id"": ""982e5f03-116f-4953-a2bd-8de8f340b1ff"",
+                    ""id"": ""a880186a-60ab-4984-9eec-13c970638c59"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true,
                     ""priority"": 0
-                },
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a63dbda9-c088-4d97-8ede-bb06c140aa99"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Player"",
+            ""id"": ""df70fa95-8a34-4494-b137-73ab6b9c7d37"",
+            ""actions"": [
                 {
                     ""name"": ""WASD"",
                     ""type"": ""Value"",
@@ -337,17 +356,6 @@ namespace Chunity.Framework
                 },
                 {
                     ""name"": """",
-                    ""id"": ""925d45d5-2738-4106-881b-5deca006ee9d"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""MousePosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""999bd0df-06cd-4bbf-bdb7-54af57f94503"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -544,9 +552,11 @@ namespace Chunity.Framework
         }
     ]
 }");
+            // Always
+            m_Always = asset.FindActionMap("Always", throwIfNotFound: true);
+            m_Always_MousePosition = m_Always.FindAction("MousePosition", throwIfNotFound: true);
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-            m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
             m_Player_WASD = m_Player.FindAction("WASD", throwIfNotFound: true);
             m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
             m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
@@ -564,6 +574,7 @@ namespace Chunity.Framework
 
         ~@InputSystem_Actions()
         {
+            UnityEngine.Debug.Assert(!m_Always.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Always.Disable() has not been called.");
             UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Player.Disable() has not been called.");
         }
 
@@ -637,10 +648,105 @@ namespace Chunity.Framework
             return asset.FindBinding(bindingMask, out action);
         }
 
+        // Always
+        private readonly InputActionMap m_Always;
+        private List<IAlwaysActions> m_AlwaysActionsCallbackInterfaces = new List<IAlwaysActions>();
+        private readonly InputAction m_Always_MousePosition;
+        /// <summary>
+        /// Provides access to input actions defined in input action map "Always".
+        /// </summary>
+        public struct AlwaysActions
+        {
+            private @InputSystem_Actions m_Wrapper;
+
+            /// <summary>
+            /// Construct a new instance of the input action map wrapper class.
+            /// </summary>
+            public AlwaysActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+            /// <summary>
+            /// Provides access to the underlying input action "Always/MousePosition".
+            /// </summary>
+            public InputAction @MousePosition => m_Wrapper.m_Always_MousePosition;
+            /// <summary>
+            /// Provides access to the underlying input action map instance.
+            /// </summary>
+            public InputActionMap Get() { return m_Wrapper.m_Always; }
+            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+            public void Enable() { Get().Enable(); }
+            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+            public void Disable() { Get().Disable(); }
+            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+            public bool enabled => Get().enabled;
+            /// <summary>
+            /// Implicitly converts an <see ref="AlwaysActions" /> to an <see ref="InputActionMap" /> instance.
+            /// </summary>
+            public static implicit operator InputActionMap(AlwaysActions set) { return set.Get(); }
+            /// <summary>
+            /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+            /// </summary>
+            /// <param name="instance">Callback instance.</param>
+            /// <remarks>
+            /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+            /// </remarks>
+            /// <seealso cref="AlwaysActions" />
+            public void AddCallbacks(IAlwaysActions instance)
+            {
+                if (instance == null || m_Wrapper.m_AlwaysActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_AlwaysActionsCallbackInterfaces.Add(instance);
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
+            }
+
+            /// <summary>
+            /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+            /// </summary>
+            /// <remarks>
+            /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+            /// </remarks>
+            /// <seealso cref="AlwaysActions" />
+            private void UnregisterCallbacks(IAlwaysActions instance)
+            {
+                @MousePosition.started -= instance.OnMousePosition;
+                @MousePosition.performed -= instance.OnMousePosition;
+                @MousePosition.canceled -= instance.OnMousePosition;
+            }
+
+            /// <summary>
+            /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="AlwaysActions.UnregisterCallbacks(IAlwaysActions)" />.
+            /// </summary>
+            /// <seealso cref="AlwaysActions.UnregisterCallbacks(IAlwaysActions)" />
+            public void RemoveCallbacks(IAlwaysActions instance)
+            {
+                if (m_Wrapper.m_AlwaysActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            /// <summary>
+            /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+            /// </summary>
+            /// <remarks>
+            /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+            /// </remarks>
+            /// <seealso cref="AlwaysActions.AddCallbacks(IAlwaysActions)" />
+            /// <seealso cref="AlwaysActions.RemoveCallbacks(IAlwaysActions)" />
+            /// <seealso cref="AlwaysActions.UnregisterCallbacks(IAlwaysActions)" />
+            public void SetCallbacks(IAlwaysActions instance)
+            {
+                foreach (var item in m_Wrapper.m_AlwaysActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_AlwaysActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        /// <summary>
+        /// Provides a new <see cref="AlwaysActions" /> instance referencing this action map.
+        /// </summary>
+        public AlwaysActions @Always => new AlwaysActions(this);
+
         // Player
         private readonly InputActionMap m_Player;
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-        private readonly InputAction m_Player_MousePosition;
         private readonly InputAction m_Player_WASD;
         private readonly InputAction m_Player_LeftClick;
         private readonly InputAction m_Player_RightClick;
@@ -665,10 +771,6 @@ namespace Chunity.Framework
             /// Construct a new instance of the input action map wrapper class.
             /// </summary>
             public PlayerActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
-            /// <summary>
-            /// Provides access to the underlying input action "Player/MousePosition".
-            /// </summary>
-            public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
             /// <summary>
             /// Provides access to the underlying input action "Player/WASD".
             /// </summary>
@@ -747,9 +849,6 @@ namespace Chunity.Framework
             {
                 if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-                @MousePosition.started += instance.OnMousePosition;
-                @MousePosition.performed += instance.OnMousePosition;
-                @MousePosition.canceled += instance.OnMousePosition;
                 @WASD.started += instance.OnWASD;
                 @WASD.performed += instance.OnWASD;
                 @WASD.canceled += instance.OnWASD;
@@ -800,9 +899,6 @@ namespace Chunity.Framework
             /// <seealso cref="PlayerActions" />
             private void UnregisterCallbacks(IPlayerActions instance)
             {
-                @MousePosition.started -= instance.OnMousePosition;
-                @MousePosition.performed -= instance.OnMousePosition;
-                @MousePosition.canceled -= instance.OnMousePosition;
                 @WASD.started -= instance.OnWASD;
                 @WASD.performed -= instance.OnWASD;
                 @WASD.canceled -= instance.OnWASD;
@@ -941,11 +1037,11 @@ namespace Chunity.Framework
             }
         }
         /// <summary>
-        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
+        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Always" which allows adding and removing callbacks.
         /// </summary>
-        /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
-        /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
-        public interface IPlayerActions
+        /// <seealso cref="AlwaysActions.AddCallbacks(IAlwaysActions)" />
+        /// <seealso cref="AlwaysActions.RemoveCallbacks(IAlwaysActions)" />
+        public interface IAlwaysActions
         {
             /// <summary>
             /// Method invoked when associated input action "MousePosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
@@ -954,6 +1050,14 @@ namespace Chunity.Framework
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnMousePosition(InputAction.CallbackContext context);
+        }
+        /// <summary>
+        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
+        /// </summary>
+        /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
+        /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
+        public interface IPlayerActions
+        {
             /// <summary>
             /// Method invoked when associated input action "WASD" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

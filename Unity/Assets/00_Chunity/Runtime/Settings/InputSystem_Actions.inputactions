@@ -3,19 +3,38 @@
     "name": "InputSystem_Actions",
     "maps": [
         {
-            "name": "Player",
-            "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
+            "name": "Always",
+            "id": "545061aa-c14b-4b8b-bf11-e17bf3084e9d",
             "actions": [
                 {
                     "name": "MousePosition",
                     "type": "Value",
-                    "id": "982e5f03-116f-4953-a2bd-8de8f340b1ff",
+                    "id": "a880186a-60ab-4984-9eec-13c970638c59",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true,
                     "priority": 0
-                },
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a63dbda9-c088-4d97-8ede-bb06c140aa99",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player",
+            "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
+            "actions": [
                 {
                     "name": "WASD",
                     "type": "Value",
@@ -246,17 +265,6 @@
                     "action": "WASD",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "925d45d5-2738-4106-881b-5deca006ee9d",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "MousePosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

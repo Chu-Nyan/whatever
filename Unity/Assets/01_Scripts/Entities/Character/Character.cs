@@ -68,5 +68,15 @@ public class Character : MonoBehaviour, ISceneObject, IMovementReceiver
     public void RegisterDeactivated(Action<Character> callback)
     {
         Deactivated += callback;
+
+        public void ToggleSprint(bool value)
+        {
+            _stateContext.IsSprinting = true;
+        }
+
+        public void Dodge()
+        {
+            Debug.Log("Dodge");
+        }
     }
 }

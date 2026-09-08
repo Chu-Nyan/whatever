@@ -29,6 +29,9 @@ namespace Whatever.ObjectControl
         {
             InputSystem.Instance.Player.WASD.RegisterPerformed(SetDiection);
             InputSystem.Instance.Player.WASD.RegisterCanceled(SetDiection);
+            InputSystem.Instance.Player.Dodge.RegisterPerformed(Dodge);
+            InputSystem.Instance.Player.Sprint.RegisterPerformed(() => ToggleSprint(true));
+            InputSystem.Instance.Player.Sprint.RegisterCanceled(() => ToggleSprint(false));
         }
 
         public void Disable()
@@ -51,6 +54,16 @@ namespace Whatever.ObjectControl
 
             var direction = new Vector3(_direction.x * 0.5f, 0, _direction.y * 0.5f) + _movementReceiver.transform.position;
             _movementReceiver.SetDestination(direction);
+        }
+
+        private void Dodge()
+        {
+            _movementReceiver.Dodge();
+        }
+
+        private void ToggleSprint(bool value)
+        {
+            _movementReceiver.ToggleSprint(value);
         }
     }
 }

@@ -1,6 +1,7 @@
 using Chunity.Core;
 using Unity.VisualScripting;
 using UnityEngine;
+using Whatever.Entities.Characters;
 using Whatever.ObjectControl;
 
 namespace Whatever.Core

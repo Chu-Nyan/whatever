@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Chunity.GameSystem.AI
@@ -20,7 +20,7 @@ namespace Chunity.GameSystem.AI
             _resolver = resolver;
         }
 
-        public void AddStates(IMachineState<T, K> state)
+        public void SetupStates(IMachineState<T, K> state)
         {
             if (_stateByType.ContainsKey(state.Type) == true)
                 throw new ArgumentException($"중복 등록됨");
@@ -28,10 +28,9 @@ namespace Chunity.GameSystem.AI
             _stateByType[state.Type] = state;
         }
 
-        public void Setup(K context)
+        public void Run(K context)
         {
-            _currentState = _stateByType[_resolver.Resolve(context)];
-            _currentState.Enter(context);
+            ChangeState(_resolver.Resolve(context), context);
         }
 
         public void Tick(K context)
@@ -42,18 +41,20 @@ namespace Chunity.GameSystem.AI
 #endif
             bool isFinished = _currentState.Tick(context);
 
-            if (_currentState.Tick(context) == true)
-                ChangeState(_resolver.Resolve(context), context);
+            if (isFinished == true)
+            {
+                _currentState.Exit(context);
+                var nextState = _resolver.Resolve(context);
+                if (_currentState.Type.Equals(nextState) == false)
+                {
+                    ChangeState(_resolver.Resolve(context), context);
+                }
+            }
         }
 
-        public void ChangeState(T type, K context)
+        private void ChangeState(T type, K context)
         {
-            if (_currentState.Type.Equals(type) == true)
-                return;
-
-            _currentState?.Exit(context);
             _currentState = _stateByType[type];
-            //Debug.Log(type);
             _currentState.Enter(context);
         }
     }

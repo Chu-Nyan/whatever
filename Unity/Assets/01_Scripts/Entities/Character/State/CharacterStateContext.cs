@@ -2,12 +2,13 @@ namespace Whatever.Entities.Characters
 {
     public class CharacterStateContext
     {
-        public MovementOrder MovementOrder;
-        public bool ExcuteMovement;
+        public readonly MovementOrder MovementOrder;
+        public readonly ActionOrder ActionOrder;
 
         public CharacterStateContext()
         {
             MovementOrder = new();
+            ActionOrder = new();
         }
     }
 }

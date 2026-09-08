@@ -2,11 +2,11 @@ using Chunity.GameSystem.AI;
 
 namespace Whatever.Entities.Characters
 {
-    public class IdleState : IMachineState<MovementState, CharacterStateContext>
+    public class IdleState : IMachineState<MovementOrder.Order, CharacterStateContext>
     {
-        public MovementState Type
+        public MovementOrder.Order Type
         {
-            get => MovementState.Idle;
+            get => MovementOrder.Order.Idle;
         }
 
         public void Enter(CharacterStateContext context)
@@ -15,7 +15,7 @@ namespace Whatever.Entities.Characters
 
         public bool Tick(CharacterStateContext context)
         {
-            if (context.MovementOrder.CanMove == true)
+            if (context.MovementOrder.Requested != MovementOrder.Order.Idle)
                 return true;
 
             return false;

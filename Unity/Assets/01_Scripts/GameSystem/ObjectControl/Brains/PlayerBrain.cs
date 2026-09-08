@@ -58,7 +58,7 @@ namespace Whatever.ObjectControl
 
         private void Dodge()
         {
-            _movementReceiver.Dodge();
+            _movementReceiver.OrderDodge(_direction);
         }
 
         private void ToggleSprint(bool value)

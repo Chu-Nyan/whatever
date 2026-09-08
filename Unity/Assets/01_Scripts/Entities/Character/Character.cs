@@ -42,38 +42,82 @@ namespace Whatever.Entities.Characters
 
         private void Update()
         {
+            CheckExternalConditions();
             _state.Update(_stateContext);
             ExcuteMovementOrder();
-            Debug.Log(_state.MovementState);
+            ExcuteActionOrder();
+        }
+
+        private void CheckExternalConditions()
+        {
+            if (_stateContext.ActionOrder.CanMove == false)
+            {
+                _stateContext.MovementOrder.RequestOrder(MovementOrder.Order.Idle);
+            }
         }
 
         private void ExcuteMovementOrder()
         {
-            if (_state.MovementState == MovementState.Idle)
-                return;
-
-            if (_stateContext.ExcuteMovement == false)
+            if (_state.MovementState == MovementOrder.Order.Idle)
             {
-                _nav.SetDestination(_stateContext.MovementOrder.Destination);
-                _stateContext.ExcuteMovement = true;
-            }
-            else
-            {
-                if ((transform.position.ToVector2XZ() - _stateContext.MovementOrder.Destination.ToVector2XZ()).sqrMagnitude <= Const.Epsilon)
+                if (_stateContext.MovementOrder.IsRequestedOrder == true)
                 {
-                    _stateContext.ExcuteMovement = false;
-                    _stateContext.MovementOrder.CanMove = false;
+                    _stateContext.MovementOrder.ExcuteRequestedOrder();
+                    _stateContext.MovementOrder.EndOrder();
                 }
             }
+            if (_state.MovementState == MovementOrder.Order.Running || _state.MovementState == MovementOrder.Order.Sprinting)
+            {
+                Move(_stateContext.MovementOrder);
+            }
+        }
 
+        private void ExcuteActionOrder()
+        {
+            if (_state.ActionState == ActionOrder.Order.Idle)
+                return;
+
+            if (_state.ActionState == ActionOrder.Order.Dodge)
+            {
+                Dodge(_stateContext.ActionOrder);
+            }
+        }
+
+        private void Move(MovementOrder movementOrder)
+        {
+            if (movementOrder.IsRequestedOrder == true)
+            {
+                _nav.SetDestination(movementOrder.Destination);
+                movementOrder.ExcuteRequestedOrder();
+            }
+
+            if ((transform.position.ToVector2XZ() - movementOrder.Destination.ToVector2XZ()).sqrMagnitude <= Const.Epsilon)
+            {
+                movementOrder.EndOrder();
+            }
+        }
+
+        private void Dodge(ActionOrder actionOrder)
+        {
+            if (actionOrder.IsRequestedOrder == true)
+            {
+                StopMovement();
+                actionOrder.ExcuteRequestedOrder();
+            }
+
+            actionOrder.OrderTime += Time.deltaTime;
+            var v2 = 10 * Time.deltaTime * actionOrder.DodgeDirection;
+            var v3 = new Vector3(v2.x, 0, v2.y);
+            SetPositionWithNavMash(transform.position + v3);
+
+            if (actionOrder.OrderTime >= 0.5f)
+                actionOrder.EndOrder();
         }
 
         public void SetDestination(Vector3 destination)
         {
+            _stateContext.MovementOrder.RequestOrder(MovementOrder.Order.Running);
             _stateContext.MovementOrder.Destination = destination;
-            _stateContext.MovementOrder.CanMove = true;
-            _stateContext.ExcuteMovement = false;
-
         }
 
         public void SetPositionWithNavMash(Vector3 position)
@@ -89,9 +133,13 @@ namespace Whatever.Entities.Characters
             _stateContext.MovementOrder.IsSprinting = value;
         }
 
-        public void Dodge()
+        public void OrderDodge(Vector2 dir)
         {
-            Debug.Log("Dodge");
+            if (dir == Vector2.zero)
+                dir = Vector2.up;
+            _stateContext.ActionOrder.RequestOrder(ActionOrder.Order.Dodge);
+            _stateContext.ActionOrder.DodgeDirection = dir;
+            _stateContext.ActionOrder.CanMove = false;
         }
 
         public void StopMovement()

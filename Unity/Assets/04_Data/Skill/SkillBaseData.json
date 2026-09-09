@@ -1,0 +1,42 @@
+[
+  {
+    "ID": 1,
+    "NameKey": "skill.basicmelee",
+    "CastingTime": 0.0,
+    "Cooldown": 1.0,
+    "Cost": 0.0,
+    "CollisionSequenceID": 1
+  },
+  {
+    "ID": 2,
+    "NameKey": "skill.basicranged",
+    "CastingTime": 0.0,
+    "Cooldown": 0.4,
+    "Cost": 0.0,
+    "CollisionSequenceID": 2
+  },
+  {
+    "ID": 3,
+    "NameKey": "skill.firebolt",
+    "CastingTime": 1.0,
+    "Cooldown": 4.0,
+    "Cost": 3.0,
+    "CollisionSequenceID": 3
+  },
+  {
+    "ID": 4,
+    "NameKey": "skill.frogpoison",
+    "CastingTime": 1.0,
+    "Cooldown": 5.0,
+    "Cost": 5.0,
+    "CollisionSequenceID": 4
+  },
+  {
+    "ID": 5,
+    "NameKey": "skill.stickybomb",
+    "CastingTime": 1.0,
+    "Cooldown": 6.0,
+    "Cost": 7.0,
+    "CollisionSequenceID": 5
+  }
+]

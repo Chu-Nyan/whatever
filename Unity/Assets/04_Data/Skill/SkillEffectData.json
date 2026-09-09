@@ -1,0 +1,44 @@
+[
+  {
+    "ID": 1,
+    "EffectType": 0,
+    "EffectID": 1,
+    "Order": 1
+  },
+  {
+    "ID": 2,
+    "EffectType": 0,
+    "EffectID": 2,
+    "Order": 1
+  },
+  {
+    "ID": 3,
+    "EffectType": 0,
+    "EffectID": 3,
+    "Order": 1
+  },
+  {
+    "ID": 4,
+    "EffectType": 1,
+    "EffectID": 1,
+    "Order": 1
+  },
+  {
+    "ID": 5,
+    "EffectType": 0,
+    "EffectID": 4,
+    "Order": 1
+  },
+  {
+    "ID": 5,
+    "EffectType": 3,
+    "EffectID": 2,
+    "Order": 2
+  },
+  {
+    "ID": 5,
+    "EffectType": 2,
+    "EffectID": 1,
+    "Order": 3
+  }
+]

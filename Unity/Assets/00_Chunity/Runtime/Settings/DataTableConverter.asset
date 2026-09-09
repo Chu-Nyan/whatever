@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Chunity.DataPipeline.DataTableConverter
   GoogleLoader:
     GoogleSheetID: 1ojmQBCvXK5TKlW2udlV2d20fCiHIF0YDpcipESKKokc
-    LastSync: "2026-09-01 \uC624\uD6C4 12:22:57"
+    LastSync: "2026-09-10 \uC624\uC804 1:27:31"
     Export: {fileID: 102900000, guid: f6d90e5d02d8aca4da1133b52bbaf240, type: 3}
   Config:
     _nameRow: 1
@@ -26,8 +26,43 @@ MonoBehaviour:
     ScriptSuffix: Dto
     JsonSuffix: Data
   TableByName:
-  - key: Temp
+  - key: Skill_Base
     value:
-      NameSpace: Chunity.DTO
+      NameSpace: Whatever.Entities.Skill
+      ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
+      JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}
+  - key: Skill_Sequence
+    value:
+      NameSpace: Whatever.Entities.Skill
       ScriptPath: {fileID: 102900000, guid: aec49ced3de38854ba536bcaaf9fecab, type: 3}
-      JsonPath: {fileID: 102900000, guid: aec49ced3de38854ba536bcaaf9fecab, type: 3}
+      JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}
+  - key: Skill_Hitbox
+    value:
+      NameSpace: Whatever.Entities.Skill
+      ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
+      JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}
+  - key: Skill_Effect
+    value:
+      NameSpace: Whatever.Entities.Skill
+      ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
+      JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}
+  - key: Skill_Effect_Area
+    value:
+      NameSpace: Whatever.Entities.Skill
+      ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
+      JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}
+  - key: Skill_Effect_Timer
+    value:
+      NameSpace: Whatever.Entities.Skill
+      ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
+      JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}
+  - key: Skill_Effect_Instant
+    value:
+      NameSpace: Whatever.Entities.Skill
+      ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
+      JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}
+  - key: Skill_Effect_Dot
+    value:
+      NameSpace: Whatever.Entities.Skill
+      ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
+      JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}

@@ -1,0 +1,22 @@
+[
+  {
+    "ID": 1,
+    "DamageRate": 1.0,
+    "Count": 1
+  },
+  {
+    "ID": 2,
+    "DamageRate": 1.0,
+    "Count": 1
+  },
+  {
+    "ID": 3,
+    "DamageRate": 2.0,
+    "Count": 1
+  },
+  {
+    "ID": 4,
+    "DamageRate": 0.1,
+    "Count": 1
+  }
+]

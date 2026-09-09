@@ -1,0 +1,56 @@
+[
+  {
+    "ID": 1,
+    "ShapeType": 0,
+    "Rotation": 0.0,
+    "Param1": 2.0,
+    "Param2": 2.0,
+    "OffsetX": 0.0,
+    "OffsetY": 0.5
+  },
+  {
+    "ID": 2,
+    "ShapeType": 1,
+    "Rotation": 0.0,
+    "Param1": 0.3,
+    "Param2": 0.0,
+    "OffsetX": 0.0,
+    "OffsetY": 0.0
+  },
+  {
+    "ID": 3,
+    "ShapeType": 1,
+    "Rotation": 0.0,
+    "Param1": 0.2,
+    "Param2": 0.0,
+    "OffsetX": 0.0,
+    "OffsetY": 0.0
+  },
+  {
+    "ID": 3,
+    "ShapeType": 0,
+    "Rotation": 0.0,
+    "Param1": 0.2,
+    "Param2": 1.0,
+    "OffsetX": 0.0,
+    "OffsetY": -0.5
+  },
+  {
+    "ID": 4,
+    "ShapeType": 1,
+    "Rotation": 0.0,
+    "Param1": 0.5,
+    "Param2": 0.0,
+    "OffsetX": 0.0,
+    "OffsetY": 0.0
+  },
+  {
+    "ID": 5,
+    "ShapeType": 1,
+    "Rotation": 0.0,
+    "Param1": 0.5,
+    "Param2": 0.0,
+    "OffsetX": 0.0,
+    "OffsetY": 0.0
+  }
+]

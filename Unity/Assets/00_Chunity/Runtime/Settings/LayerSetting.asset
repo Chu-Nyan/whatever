@@ -15,8 +15,8 @@ MonoBehaviour:
   _generatorPath: Assets/00_Chunity/Runtime/Scripts/GameSystem/Physics/Layer
   _layer:
   - Defalut
-  - 
-  - 
+  - Character
+  - Projectile
   - 
   - 
   - 

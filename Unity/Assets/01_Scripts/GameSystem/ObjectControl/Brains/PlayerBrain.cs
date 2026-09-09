@@ -6,8 +6,10 @@ namespace Whatever.ObjectControl
     public class PlayerBrain : IBrainStrategy
     {
         private IMovementReceiver _movementReceiver;
+        private IOffenseReceiver _offenseReceiver;
         private Vector2 _direction;
         private bool _isMoving;
+        private bool _isSkillSwap;
 
         public BrainType BrainType
         {
@@ -23,6 +25,8 @@ namespace Whatever.ObjectControl
         {
             if (obj is IMovementReceiver movement)
                 _movementReceiver = movement;
+            if (obj is IOffenseReceiver offense)
+                _offenseReceiver = offense;
         }
 
         public void Enable()
@@ -32,6 +36,18 @@ namespace Whatever.ObjectControl
             InputSystem.Instance.Player.Dodge.RegisterPerformed(Dodge);
             InputSystem.Instance.Player.Sprint.RegisterPerformed(() => ToggleSprint(true));
             InputSystem.Instance.Player.Sprint.RegisterCanceled(() => ToggleSprint(false));
+
+            InputSystem.Instance.Player.LeftClick.RegisterPerformed(UseBasicSkill);
+            InputSystem.Instance.Player.RightClick.RegisterPerformed(UseSupportSkill);
+            InputSystem.Instance.Player.Ultimate.RegisterPerformed(UseUltimate);
+
+
+            for (int i = 0; i < 4; i++)
+            {
+                InputSystem.Instance.Player.Skills[i].RegisterPerformed(UseSkillSlot);
+            }
+            InputSystem.Instance.Player.SkillSlotSwap.RegisterPerformed(() => _isSkillSwap = true);
+            InputSystem.Instance.Player.SkillSlotSwap.RegisterCanceled(() => _isSkillSwap = false);
         }
 
         public void Disable()
@@ -56,6 +72,29 @@ namespace Whatever.ObjectControl
             _movementReceiver.SetDestination(direction);
         }
 
+        private void UseBasicSkill()
+        {
+            _offenseReceiver.UseSkill(10, InputSystem.Instance.Always.MousePosition);
+        }
+
+        private void UseSupportSkill()
+        {
+            _offenseReceiver.UseSkill(20, InputSystem.Instance.Always.MousePosition);
+        }
+
+        private void UseUltimate()
+        {
+            _offenseReceiver.UseSkill(30, InputSystem.Instance.Always.MousePosition);
+        }
+
+        private void UseSkillSlot(int skillSlot)
+        {
+            if (_isSkillSwap == true)
+                skillSlot += 4;
+
+            _offenseReceiver.UseSkill(skillSlot, InputSystem.Instance.Always.MousePosition);
+        }
+
         private void Dodge()
         {
             _movementReceiver.OrderDodge(_direction);
@@ -65,5 +104,6 @@ namespace Whatever.ObjectControl
         {
             _movementReceiver.ToggleSprint(value);
         }
+
     }
 }

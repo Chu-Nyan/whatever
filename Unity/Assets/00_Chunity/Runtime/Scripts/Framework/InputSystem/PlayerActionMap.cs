@@ -34,7 +34,6 @@ namespace Chunity.Framework
             {
                 new(actions.ItemSlotA, InputEventType.Performed, 0),
                 new(actions.ItemSlotB, InputEventType.Performed, 1),
-                new(actions.SkillSlotD, InputEventType.Performed, 4)
             };
         }
     }

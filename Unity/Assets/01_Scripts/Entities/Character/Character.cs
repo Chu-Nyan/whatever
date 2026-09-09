@@ -8,7 +8,7 @@ using Whatever.ObjectControl;
 
 namespace Whatever.Entities.Characters
 {
-    public class Character : MonoBehaviour, ISceneObject, IMovementReceiver
+    public class Character : MonoBehaviour, ISceneObject, IMovementReceiver, IOffenseReceiver
     {
         private int _instanceID;
 
@@ -145,6 +145,11 @@ namespace Whatever.Entities.Characters
         public void StopMovement()
         {
             _nav.ResetPath();
+        }
+
+        public void UseSkill(int skillID, Vector3 targetPoint)
+        {
+            Debug.Log("Skill ID : " + skillID);
         }
 
         public void SetActive(bool value)

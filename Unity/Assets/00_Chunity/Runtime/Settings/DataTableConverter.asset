@@ -34,7 +34,7 @@ MonoBehaviour:
   - key: Skill_Sequence
     value:
       NameSpace: Whatever.Entities.Skill
-      ScriptPath: {fileID: 102900000, guid: aec49ced3de38854ba536bcaaf9fecab, type: 3}
+      ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
       JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}
   - key: Skill_Hitbox
     value:

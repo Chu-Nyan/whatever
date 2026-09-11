@@ -4,5 +4,10 @@ namespace Whatever.Entities.Skill
     {
         public int ID;
         public float Duration;
+
+        public override EffectType Type
+        {
+            get => EffectType.Timer;
+        }
     }
 }

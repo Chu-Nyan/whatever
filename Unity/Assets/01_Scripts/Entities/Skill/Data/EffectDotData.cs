@@ -7,5 +7,10 @@ namespace Whatever.Entities.Skill
         public int ID;
         public float DamageRate;
         public float Duration;
+
+        public override EffectType Type
+        {
+            get => EffectType.Dot;
+        }
     }
 }

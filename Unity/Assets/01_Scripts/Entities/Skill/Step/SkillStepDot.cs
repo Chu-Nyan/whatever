@@ -5,7 +5,7 @@ namespace Whatever.Entities.Skill
     public class SkillStepDot : ISkillStep
     {
         private EffectDotData _data;
-        private SkillObjectContext _context;
+        private ProjectileData _context;
         private bool _isDone;
         private float _remainInterval;
         private float _remainTick;
@@ -15,7 +15,7 @@ namespace Whatever.Entities.Skill
             get => _isDone;
         }
 
-        public void Setup(EffectDotData data, SkillObjectContext context)
+        public void Setup(EffectDotData data, ProjectileData context)
         {
             _data = data;
             _context = context;

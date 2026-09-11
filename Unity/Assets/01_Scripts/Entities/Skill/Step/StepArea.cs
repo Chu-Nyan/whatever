@@ -3,7 +3,7 @@ namespace Whatever.Entities.Skill
     public class StepArea : ISkillStep
     {
         private EffectAreaData _data;
-        private SkillObjectContext _context;
+        private ProjectileData _context;
         private bool _isDone;
 
         public bool IsDone
@@ -11,7 +11,7 @@ namespace Whatever.Entities.Skill
             get => _isDone;
         }
 
-        public void Setup(EffectAreaData data, SkillObjectContext context)
+        public void Setup(EffectAreaData data, ProjectileData context)
         {
             _data = data;
             _context = context;

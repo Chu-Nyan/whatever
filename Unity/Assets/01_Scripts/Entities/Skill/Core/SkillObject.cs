@@ -1,3 +1,4 @@
+using Chunity.Core;
 using Chunity.GameSystem.Physics;
 using Chunity.Utility;
 using System;
@@ -14,8 +15,7 @@ namespace Whatever.Entities.Skill
         [SerializeField]
         private MeshFilter _meshFilter;
         private NyanCollider _nyanCollider;
-        private SkillObjectContext _context;
-        private int _hostilityMask;
+        private ProjectileData _data;
         private int _logicStep;
         private float _timer;
 
@@ -26,20 +26,17 @@ namespace Whatever.Entities.Skill
             get => _nyanCollider;
         }
 
-        public SkillObjectContext Context
+        private void Awake()
         {
-            get => _context;
-        }
-
-        public void Awake()
-        {
-            _nyanCollider = NyanColliderFactory.Instance.Create(this, new RectShape(), false, $"Projectile {1}");
+            ID = IDGenerator.Next();
+            _nyanCollider = NyanColliderFactory.Instance.Create(this, new RectShape(), false, $"Projectile {ID}");
             _nyanCollider.SetInstigatorID(0);
+            _data = new();
         }
 
         private void Update()
         {
-            var sequenceData = Context.SkillData.SequenceData;
+            var sequenceData = _data.SkillData.SequenceData;
             _timer += Time.deltaTime;
 
             if (_timer > sequenceData[_logicStep].ActiveTime)
@@ -67,12 +64,11 @@ namespace Whatever.Entities.Skill
             SetActive(false);
         }
 
-        public void Setup(int instigator, SkillObjectContext context, int hostilityMask)
+        public void Setup(int instigatorID, SkillBaseData data, float dmg, int targetFactionMask, NyanLayerMask worldMask)
         {
-            _context = context;
-            _hostilityMask = hostilityMask;
-            _nyanCollider.SetInstigatorID(instigator);
-            _nyanCollider.SetLayer(_layer, _context.Mask);
+            _data.Setup(data, dmg, targetFactionMask, worldMask);
+            _nyanCollider.SetInstigatorID(instigatorID);
+            _nyanCollider.SetLayer(_layer, _data.Mask);
             _logicStep = 0;
             ChangeShape(_logicStep);
             _nyanCollider.SetTransform(transform.position.ToVector2XZ(), transform.eulerAngles.y);
@@ -93,9 +89,9 @@ namespace Whatever.Entities.Skill
 
         private void ChangeShape(int step)
         {
-            var sequenceData = Context.SkillData.SequenceData[step];
+            var sequenceData = _data.SkillData.SequenceData[step];
             var shape = ShapeParam.ConvertShape(sequenceData.Hitboxes);
-            _meshFilter.mesh = sequenceData.HitBoxMesh;
+            //_meshFilter.mesh = sequenceData.HitBoxMesh;
             _nyanCollider.SetShape(shape);
             _timer = 0;
         }
@@ -110,7 +106,7 @@ namespace Whatever.Entities.Skill
 
         public void OnNyanCollisionEnter(INyanCollisionProvider provider)
         {
-            // TODO 적중시 처리
+            Debug.Log("Hit");
         }
 
         public void OnNyanCollisionExit(INyanCollisionProvider collider)

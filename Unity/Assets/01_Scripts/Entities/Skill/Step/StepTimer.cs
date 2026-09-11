@@ -13,7 +13,7 @@ namespace Whatever.Entities.Skill
             get => _isDone;
         }
 
-        public void Setup(EffectTimerData data, SkillObjectContext context)
+        public void Setup(EffectTimerData data, ProjectileData context)
         {
             _data = data;
             _remainTime = _data.Duration;

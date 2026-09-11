@@ -1,3 +1,4 @@
+using Chunity.Core;
 using System;
 
 namespace Whatever.Entities.Skill
@@ -19,9 +20,9 @@ namespace Whatever.Entities.Skill
             get => _data;
         }
 
-        public SkillKernel(int id)
+        public SkillKernel()
         {
-            ID = id;
+            ID = IDGenerator.Next();
         }
 
         public void Setup(SkillBaseData data)

@@ -5,24 +5,26 @@ namespace Whatever.Entities.Skill
 {
     public class SkillEffects
     {
-        private readonly SkillObjectContext _context;
+        private ProjectileData _data;
         private readonly List<ISkillStep> _steps;
 
         private int _currentStepIndex;
         private bool _isDone;
 
-        public SkillObjectContext Context
+        public SkillEffects()
         {
-            get => _context;
+            _steps = new();
         }
 
-        public SkillEffects(SkillObjectContext context, List<ISkillStep> steps)
+        public void Setup(ProjectileData data, List<ISkillStep> steps)
         {
             if (steps == null || steps.Count == 0)
-                throw new System.Exception($"Invalid steps\nSkill ID : {_context.SkillData.ID}");
-
-            _context = context;
-            _steps = steps;
+                throw new System.Exception($"Invalid steps\nSkill ID : {_data.SkillData.ID}");
+            _data = data;
+            for (int i = 0; i < steps.Count; i++)
+            {
+                _steps.Add(steps[i]);
+            }
             _currentStepIndex = 0;
             _isDone = false;
         }

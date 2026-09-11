@@ -1,14 +1,18 @@
+using Chunity.Core;
 using Chunity.Utility;
 using System;
+using Whatever.GameSystems;
 
 namespace Whatever.Core
 {
     public class DataBase : Singleton<DataBase>
     {
+        public readonly WorldProfile WorldProfile;
         public readonly SkillRepository SkillRepo;
 
         public DataBase()
         {
+            WorldProfile = AssetManager.LoadAssetSync<WorldProfile>("WorldProfile");
             SkillRepo = new();
         }
 

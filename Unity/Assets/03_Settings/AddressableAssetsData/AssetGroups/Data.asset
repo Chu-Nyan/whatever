@@ -50,6 +50,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7364b1f8ccf3190468bdfd588fe3053b
+    m_Address: WorldProfile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9f2c90e933d8c10469c01cbd5175d13d
     m_Address: SkillEffectData
     m_ReadOnly: 0

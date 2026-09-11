@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Whatever.Core;
+using Whatever.GameSystems.Combat;
 using Whatever.ObjectControl;
 
 namespace Whatever.Entities.Characters
@@ -16,18 +17,14 @@ namespace Whatever.Entities.Characters
         private NavMeshAgent _nav;
         private CharacterState _state;
         private CharacterStateContext _stateContext;
+        private CombatSystem _combatSystem;
+        private SkillBook _skillBook;
 
         private event Action<Character> Deactivated;
 
-        public int InstanceID
-        {
-            get => _instanceID;
-        }
-
-        public int ReceiverID
-        {
-            get => _instanceID;
-        }
+        public int InstanceID => _instanceID;
+        public int ReceiverID => _instanceID;
+        public SkillBook SkillBook => _skillBook;
 
         private void Awake()
         {
@@ -38,10 +35,14 @@ namespace Whatever.Entities.Characters
             _nav.enabled = true;
             _stateContext = new();
             _state = new(_stateContext);
+            _combatSystem = new(_instanceID);
+            _skillBook = new();
         }
 
         private void Update()
         {
+            _skillBook.Tick();
+
             CheckExternalConditions();
             _state.Update(_stateContext);
             ExcuteMovementOrder();
@@ -149,7 +150,12 @@ namespace Whatever.Entities.Characters
 
         public void UseSkill(int skillID, Vector3 targetPoint)
         {
-            Debug.Log("Skill ID : " + skillID);
+            if (_skillBook.CanUse(skillID) == false)
+                return;
+
+            _skillBook.ForceUseSkill(skillID);
+            bool result = _combatSystem.FireSkill(skillID, transform.position, targetPoint);
+            Debug.Log(result + " Skill ID : " + skillID);
         }
 
         public void SetActive(bool value)

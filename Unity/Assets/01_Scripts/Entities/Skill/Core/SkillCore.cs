@@ -37,9 +37,14 @@ namespace Whatever.Entities.Skill
             if (CanUse == false)
                 return false;
 
+            Use();
+            return true;
+        }
+
+        public void Use()
+        {
             _remainingCooldown = _data.Cooldown;
             _canUse = false;
-            return true;
         }
 
         public void ReduceCooldown(float time)

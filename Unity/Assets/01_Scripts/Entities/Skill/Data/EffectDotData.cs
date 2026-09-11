@@ -1,6 +1,6 @@
 namespace Whatever.Entities.Skill
 {
-    public class EffectDotData : EffectData
+    public class EffectDotData : IEffectData
     {
         public const float DamageInterval = 1f;
 
@@ -8,7 +8,7 @@ namespace Whatever.Entities.Skill
         public float DamageRate;
         public float Duration;
 
-        public override EffectType Type
+        public EffectType Type
         {
             get => EffectType.Dot;
         }

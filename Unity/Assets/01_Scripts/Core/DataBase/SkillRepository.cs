@@ -8,7 +8,7 @@ namespace Whatever.Core
         public readonly SkillBaseData[] Skills;
 
         private readonly SequenceData[][] _sequenceDatas;
-        private readonly EffectData[][] _effectData;
+        private readonly IEffectData[][] _effectData;
         private readonly ShapeParam[][] _hitboxesData;
         private readonly EffectInstantData[] _instants;
         private readonly EffectDotData[] _dots;
@@ -23,12 +23,12 @@ namespace Whatever.Core
             _instants = DataBase.ConvertToData<SkillEffectInstantDto, EffectInstantData>("SkillEffectInstantData", a => a.ToData());
             _hitboxesData = DataBase.ConvertToArray<SkillHitboxDto, ShapeParam>("SkillHitboxData", a => a.ToData());
 
-            _effectData = DataBase.ConvertToArray<SkillEffectDto, EffectData>("SkillEffectData", a => GetEffectData(a.EffectType, a.EffectID));
+            _effectData = DataBase.ConvertToArray<SkillEffectDto, IEffectData>("SkillEffectData", a => GetEffectData(a.EffectType, a.EffectID));
             _sequenceDatas = DataBase.ConvertToArray<SkillSequenceDto, SequenceData>("SkillSequenceData", a => a.ToData(_hitboxesData[a.HitboxID], _effectData[a.EffectID]));
             Skills = DataBase.ConvertToData<SkillBaseDto, SkillBaseData>("SkillBaseData", a => a.ToData(_sequenceDatas[a.CollisionSequenceID]));
         }
 
-        private EffectData GetEffectData(EffectType type, int id)
+        private IEffectData GetEffectData(EffectType type, int id)
         {
             switch (type)
             {

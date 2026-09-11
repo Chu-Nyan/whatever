@@ -15,7 +15,7 @@ namespace Whatever.Entities.Skill
         private readonly ObjectPooling<Projectile> _objectPool;
 
         private readonly List<ISkillEffect> _effectBuffer = new();
-        private readonly Dictionary<EffectType, Func<ProjectileData, EffectData, ISkillEffect>> _generateFuncByProcessType;
+        private readonly Dictionary<EffectType, Func<ProjectileData, IEffectData, ISkillEffect>> _generateFuncByProcessType;
 
 
         public SkillFactory()
@@ -71,7 +71,7 @@ namespace Whatever.Entities.Skill
             return effects;
         }
 
-        private ISkillEffect CreateStepInstant(ProjectileData data, EffectData effectData)
+        private ISkillEffect CreateStepInstant(ProjectileData data, IEffectData effectData)
         {
             Debug.Assert(effectData is EffectInstantData, $"Skill ID : {data.SkillData.ID}");
             var step = new EffectInstant();
@@ -79,7 +79,7 @@ namespace Whatever.Entities.Skill
             return step;
         }
 
-        private ISkillEffect CreateStepDot(ProjectileData data, EffectData effectData)
+        private ISkillEffect CreateStepDot(ProjectileData data, IEffectData effectData)
         {
             Debug.Assert(effectData is EffectDotData, $"Skill ID : {data.SkillData.ID}");
             var step = new EffectDot();
@@ -87,7 +87,7 @@ namespace Whatever.Entities.Skill
             return step;
         }
 
-        private ISkillEffect CreateStepArea(ProjectileData data, EffectData effectData)
+        private ISkillEffect CreateStepArea(ProjectileData data, IEffectData effectData)
         {
             Debug.Assert(effectData is EffectAreaData, $"Skill ID : {data.SkillData.ID}");
             var step = new EffectArea();
@@ -95,7 +95,7 @@ namespace Whatever.Entities.Skill
             return step;
         }
 
-        private ISkillEffect CreateStepTimer(ProjectileData data, EffectData effectData)
+        private ISkillEffect CreateStepTimer(ProjectileData data, IEffectData effectData)
         {
             Debug.Assert(effectData is EffectTimerData, $"Skill ID : {data.SkillData.ID}");
             var step = new EffectTimer();

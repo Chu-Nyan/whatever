@@ -10,7 +10,7 @@ namespace Whatever.Entities.Skill
         public float ActiveTime;
         public float Speed;
         public ShapeParam[] Hitboxes;
-        public EffectData[] EffectDatas;
+        public IEffectData[] EffectDatas;
 
         public Mesh HitBoxMesh;
     }

@@ -1,11 +1,11 @@
 namespace Whatever.Entities.Skill
 {
-    public class EffectTimerData : EffectData
+    public class EffectTimerData : IEffectData
     {
         public int ID;
         public float Duration;
 
-        public override EffectType Type
+        public EffectType Type
         {
             get => EffectType.Timer;
         }

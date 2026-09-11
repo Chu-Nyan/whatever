@@ -3,24 +3,25 @@ using UnityEngine;
 
 namespace Whatever.Entities.Skill
 {
-    public class SkillEffects
+    public class EffectProcess
     {
         private ProjectileData _data;
-        private readonly List<ISkillStep> _steps;
+        private readonly List<ISkillEffect> _steps;
 
         private int _currentStepIndex;
         private bool _isDone;
 
-        public SkillEffects()
+        public EffectProcess()
         {
             _steps = new();
         }
 
-        public void Setup(ProjectileData data, List<ISkillStep> steps)
+        public void Setup(ProjectileData data, List<ISkillEffect> steps)
         {
             if (steps == null || steps.Count == 0)
-                throw new System.Exception($"Invalid steps\nSkill ID : {_data.SkillData.ID}");
+                throw new System.Exception($"Invalid steps\nSkill ID : {data.SkillData.ID}");
             _data = data;
+            _steps.Clear();
             for (int i = 0; i < steps.Count; i++)
             {
                 _steps.Add(steps[i]);

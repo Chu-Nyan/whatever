@@ -3,7 +3,7 @@ using System;
 
 namespace Whatever.Entities.Skill
 {
-    public class SkillKernel
+    public class SkillCore
     {
         public readonly int ID;
         private SkillBaseData _data;
@@ -20,7 +20,7 @@ namespace Whatever.Entities.Skill
             get => _data;
         }
 
-        public SkillKernel()
+        public SkillCore()
         {
             ID = IDGenerator.Next();
         }

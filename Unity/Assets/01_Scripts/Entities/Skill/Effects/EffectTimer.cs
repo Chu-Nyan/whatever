@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Whatever.Entities.Skill
 {
-    public class StepTimer : ISkillStep
+    public class EffectTimer : ISkillEffect
     {
         private EffectTimerData _data;
         private float _remainTime;

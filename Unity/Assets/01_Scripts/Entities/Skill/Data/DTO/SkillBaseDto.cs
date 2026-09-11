@@ -20,7 +20,7 @@ namespace Whatever.Entities.Skill
             get => ID;
         }
 
-        public SkillBaseData ToData(SkillSequenceData[] SequenceDatas)
+        public SkillBaseData ToData(SequenceData[] SequenceDatas)
         {
             return new SkillBaseData()
             {

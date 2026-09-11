@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Whatever.Entities.Skill
 {
-    public class SkillSequenceData
+    public class SequenceData
     {
         public int ID;
         public int Order;

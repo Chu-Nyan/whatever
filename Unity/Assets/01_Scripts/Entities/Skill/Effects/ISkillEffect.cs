@@ -1,6 +1,6 @@
 namespace Whatever.Entities.Skill
 {
-    public interface ISkillStep
+    public interface ISkillEffect
     {
         public bool IsDone { get; }
 

@@ -12,16 +12,16 @@ namespace Whatever.Entities.Skill
     public class SkillFactory : Singleton<SkillFactory>
     {
         private readonly Transform _root;
-        private readonly ObjectPooling<SkillObject> _objectPool;
+        private readonly ObjectPooling<Projectile> _objectPool;
 
-        private readonly List<ISkillStep> _effectBuffer = new();
-        private readonly Dictionary<EffectType, Func<ProjectileData, EffectData, ISkillStep>> _generateFuncByProcessType;
+        private readonly List<ISkillEffect> _effectBuffer = new();
+        private readonly Dictionary<EffectType, Func<ProjectileData, EffectData, ISkillEffect>> _generateFuncByProcessType;
 
 
         public SkillFactory()
         {
             _root = new GameObject("Skill").transform;
-            _objectPool = new(() => AssetManager.InstantiateAssetSync<SkillObject>("SkillObject", "SkillObject", _root));
+            _objectPool = new(() => AssetManager.InstantiateAssetSync<Projectile>("SkillObject", "SkillObject", _root));
 
             _generateFuncByProcessType = new()
             {
@@ -33,15 +33,15 @@ namespace Whatever.Entities.Skill
         }
 
 
-        public SkillKernel CreateKernel(int id)
+        public SkillCore CreateKernel(int id)
         {
-            var kernel = new SkillKernel();
+            var kernel = new SkillCore();
             kernel.Setup(DataBase.Instance.SkillRepo.Skills[id]);
 
             return kernel;
         }
 
-        public SkillObject CreateObject(int instigatorID, int skillID, float dmg, FactionType faction, Vector3 start, Vector3 dir)
+        public Projectile CreateObject(int instigatorID, int skillID, float dmg, FactionType faction, Vector3 start, Vector3 dir)
         {
             var obj = _objectPool.Dequeue();
             obj.Destroyed += _objectPool.Enqueue;
@@ -55,7 +55,7 @@ namespace Whatever.Entities.Skill
             return obj;
         }
 
-        public SkillEffects CreateEffects(ProjectileData data, int hitSequence)
+        public EffectProcess CreateEffects(ProjectileData data, int hitSequence)
         {
             var effectData = data.SkillData.SequenceData[hitSequence].EffectDatas;
             for (int i = 0; i < effectData.Length; i++)
@@ -64,41 +64,41 @@ namespace Whatever.Entities.Skill
                 _effectBuffer.Add(_generateFuncByProcessType[type].Invoke(data, effectData[i]));
             }
 
-            var effects = new SkillEffects();
+            var effects = new EffectProcess();
             effects.Setup(data, _effectBuffer);
 
             _effectBuffer.Clear();
             return effects;
         }
 
-        private ISkillStep CreateStepInstant(ProjectileData data, EffectData effectData)
+        private ISkillEffect CreateStepInstant(ProjectileData data, EffectData effectData)
         {
             Debug.Assert(effectData is EffectInstantData, $"Skill ID : {data.SkillData.ID}");
-            var step = new StepInstant();
+            var step = new EffectInstant();
             step.Setup((EffectInstantData)effectData, data);
             return step;
         }
 
-        private ISkillStep CreateStepDot(ProjectileData data, EffectData effectData)
+        private ISkillEffect CreateStepDot(ProjectileData data, EffectData effectData)
         {
             Debug.Assert(effectData is EffectDotData, $"Skill ID : {data.SkillData.ID}");
-            var step = new SkillStepDot();
+            var step = new EffectDot();
             step.Setup((EffectDotData)effectData, data);
             return step;
         }
 
-        private ISkillStep CreateStepArea(ProjectileData data, EffectData effectData)
+        private ISkillEffect CreateStepArea(ProjectileData data, EffectData effectData)
         {
             Debug.Assert(effectData is EffectAreaData, $"Skill ID : {data.SkillData.ID}");
-            var step = new StepArea();
+            var step = new EffectArea();
             step.Setup((EffectAreaData)effectData, data);
             return step;
         }
 
-        private ISkillStep CreateStepTimer(ProjectileData data, EffectData effectData)
+        private ISkillEffect CreateStepTimer(ProjectileData data, EffectData effectData)
         {
             Debug.Assert(effectData is EffectTimerData, $"Skill ID : {data.SkillData.ID}");
-            var step = new StepTimer();
+            var step = new EffectTimer();
             step.Setup((EffectTimerData)effectData, data);
             return step;
         }

@@ -7,7 +7,7 @@ namespace Whatever.Core
     {
         public readonly SkillBaseData[] Skills;
 
-        private readonly SkillSequenceData[][] _sequenceDatas;
+        private readonly SequenceData[][] _sequenceDatas;
         private readonly EffectData[][] _effectData;
         private readonly ShapeParam[][] _hitboxesData;
         private readonly EffectInstantData[] _instants;
@@ -24,7 +24,7 @@ namespace Whatever.Core
             _hitboxesData = DataBase.ConvertToArray<SkillHitboxDto, ShapeParam>("SkillHitboxData", a => a.ToData());
 
             _effectData = DataBase.ConvertToArray<SkillEffectDto, EffectData>("SkillEffectData", a => GetEffectData(a.EffectType, a.EffectID));
-            _sequenceDatas = DataBase.ConvertToArray<SkillSequenceDto, SkillSequenceData>("SkillSequenceData", a => a.ToData(_hitboxesData[a.HitboxID], _effectData[a.EffectID]));
+            _sequenceDatas = DataBase.ConvertToArray<SkillSequenceDto, SequenceData>("SkillSequenceData", a => a.ToData(_hitboxesData[a.HitboxID], _effectData[a.EffectID]));
             Skills = DataBase.ConvertToData<SkillBaseDto, SkillBaseData>("SkillBaseData", a => a.ToData(_sequenceDatas[a.CollisionSequenceID]));
         }
 

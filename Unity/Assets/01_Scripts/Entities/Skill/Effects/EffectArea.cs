@@ -1,6 +1,6 @@
 namespace Whatever.Entities.Skill
 {
-    public class StepArea : ISkillStep
+    public class EffectArea : ISkillEffect
     {
         private EffectAreaData _data;
         private ProjectileData _context;

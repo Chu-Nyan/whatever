@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Whatever.Entities.Skill
 {
-    public class SkillObject : MonoBehaviour, INyanCollisionProvider
+    public class Projectile : MonoBehaviour, INyanCollisionProvider
     {
         private const NyanLayer _layer = NyanLayer.Projectile;
         private const int _hitUnityLayer = 0;
@@ -19,7 +19,7 @@ namespace Whatever.Entities.Skill
         private int _logicStep;
         private float _timer;
 
-        public event Action<SkillObject> Destroyed;
+        public event Action<Projectile> Destroyed;
 
         public NyanCollider Collider
         {

@@ -21,9 +21,9 @@ namespace Whatever.Entities.Skill
             get => ID;
         }
 
-        public SkillSequenceData ToData(ShapeParam[] hotboxes, EffectData[] effectDatas)
+        public SequenceData ToData(ShapeParam[] hotboxes, EffectData[] effectDatas)
         {
-            return new SkillSequenceData()
+            return new SequenceData()
             {
                 ID = ID,
                 Order = Order,

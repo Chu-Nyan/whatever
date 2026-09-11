@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Whatever.Entities.Skill
 {
-    public class SkillStepDot : ISkillStep
+    public class EffectDot : ISkillEffect
     {
         private EffectDotData _data;
         private ProjectileData _context;

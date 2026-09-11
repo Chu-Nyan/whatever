@@ -7,6 +7,6 @@ namespace Whatever.Entities.Skill
         public float CastingTime;
         public float Cooldown;
         public float Cost;
-        public SkillSequenceData[] SequenceData;
+        public SequenceData[] SequenceData;
     }
 }

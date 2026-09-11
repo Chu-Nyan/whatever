@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.U2D;
@@ -13,7 +13,7 @@ namespace Chunity.Core
             var handle = Addressables.LoadAssetAsync<T>(path);
             handle.WaitForCompletion();
             if (handle.Status != AsyncOperationStatus.Succeeded)
-                Debug.LogError("handle.Status is not AsyncOperationStatus.Succeeded");
+                throw new System.Exception($"Addressables Load Failed.\nPath : {path}");
 
             return handle.Result;
         }

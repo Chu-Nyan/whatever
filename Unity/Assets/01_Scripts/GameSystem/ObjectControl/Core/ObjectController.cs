@@ -8,12 +8,17 @@ namespace Whatever.ObjectControl
         private AgentFactory _factory;
         private Dictionary<int, Agent> _agentByReceiverId;
         private HashSet<Agent> _agents;
+        private Agent _player;
+
+        // Test
+        private int[] _playerSkill = new int[] { 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4 };
 
         private void Awake()
         {
             _factory = new();
             _agentByReceiverId = new();
             _agents = new();
+            _player = _factory.CreatePlayerAgent();
         }
 
         private void Update()
@@ -26,7 +31,10 @@ namespace Whatever.ObjectControl
 
         public void ConnectPlayerAgent(IInputReceiver receiver)
         {
-            ConnectReceiver(_factory.Player, receiver);
+            ConnectController(_player, receiver);
+            Debug.Log(_player);
+            ((PlayerBrain)_player.Brain).SkillSlotSystem.CopySlot(_playerSkill);
+            _player.SetActive(true);
         }
 
         public void DisconnectAgent(IInputReceiver receiver)
@@ -39,15 +47,14 @@ namespace Whatever.ObjectControl
             }
         }
 
-        private void ConnectReceiver(Agent agent, IInputReceiver receiver)
+        private void ConnectController(Agent agent, IInputReceiver receiver)
         {
             if (_agentByReceiverId.ContainsKey(receiver.ReceiverID) == true)
                 DisconnectAgent(receiver);
 
+            agent.Connect(receiver);
             _agents.Add(agent);
             _agentByReceiverId.Add(receiver.ReceiverID, agent);
-            agent.Connect(receiver);
-            agent.SetActive(true);
         }
 
     }

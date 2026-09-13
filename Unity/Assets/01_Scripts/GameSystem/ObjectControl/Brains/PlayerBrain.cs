@@ -5,6 +5,8 @@ namespace Whatever.ObjectControl
 {
     public class PlayerBrain : IBrainStrategy
     {
+        private readonly SkillSlotSystem _slotSys;
+
         private IMovementReceiver _movementReceiver;
         private IOffenseReceiver _offenseReceiver;
         private Vector2 _direction;
@@ -14,6 +16,13 @@ namespace Whatever.ObjectControl
         public BrainType BrainType
         {
             get => BrainType.Player;
+        }
+
+        public SkillSlotSystem SkillSlotSystem => _slotSys;
+
+        public PlayerBrain()
+        {
+            _slotSys = new();
         }
 
         public void Tick()
@@ -26,7 +35,10 @@ namespace Whatever.ObjectControl
             if (obj is IMovementReceiver movement)
                 _movementReceiver = movement;
             if (obj is IOffenseReceiver offense)
+            {
                 _offenseReceiver = offense;
+                _slotSys.Clear();
+            }
         }
 
         public void Enable()
@@ -74,17 +86,17 @@ namespace Whatever.ObjectControl
 
         private void UseBasicSkill()
         {
-            _offenseReceiver.UseSkill(10, InputSystem.Instance.Always.MousePosition);
+            _offenseReceiver.UseSkill(_slotSys[SkillSlotSystem.Slot.Basic], InputSystem.Instance.Always.MousePosition);
         }
 
         private void UseSupportSkill()
         {
-            _offenseReceiver.UseSkill(20, InputSystem.Instance.Always.MousePosition);
+            _offenseReceiver.UseSkill(_slotSys[SkillSlotSystem.Slot.Support], InputSystem.Instance.Always.MousePosition);
         }
 
         private void UseUltimate()
         {
-            _offenseReceiver.UseSkill(30, InputSystem.Instance.Always.MousePosition);
+            _offenseReceiver.UseSkill(_slotSys[SkillSlotSystem.Slot.Ultimate], InputSystem.Instance.Always.MousePosition);
         }
 
         private void UseSkillSlot(int skillSlot)
@@ -92,11 +104,14 @@ namespace Whatever.ObjectControl
             if (_isSkillSwap == true)
                 skillSlot += 4;
 
-            _offenseReceiver.UseSkill(skillSlot, InputSystem.Instance.Always.MousePosition);
+            var skillID = _slotSys[(int)SkillSlotSystem.Slot.Slot1 + skillSlot];
+            _offenseReceiver.UseSkill(skillID, InputSystem.Instance.Always.MousePosition);
         }
 
         private void Dodge()
         {
+            // TODO : 스킬 사용으로 변경
+            _offenseReceiver.UseSkill(_slotSys[SkillSlotSystem.Slot.Dodge], InputSystem.Instance.Always.MousePosition);
             _movementReceiver.OrderDodge(_direction);
         }
 

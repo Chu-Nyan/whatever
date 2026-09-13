@@ -24,7 +24,9 @@ namespace Whatever.Entities.Characters
 
         public int InstanceID => _instanceID;
         public int ReceiverID => _instanceID;
+        public CombatSystem CombatSystem => _combatSystem;
         public SkillBook SkillBook => _skillBook;
+
 
         private void Awake()
         {
@@ -151,7 +153,10 @@ namespace Whatever.Entities.Characters
         public void UseSkill(int skillID, Vector3 targetPoint)
         {
             if (_skillBook.CanUse(skillID) == false)
+            {
+                Debug.Log(false + " Skill ID : " + skillID);
                 return;
+            }
 
             _skillBook.ForceUseSkill(skillID);
             bool result = _combatSystem.FireSkill(skillID, transform.position, targetPoint);

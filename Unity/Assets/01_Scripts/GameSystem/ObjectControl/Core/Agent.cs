@@ -7,6 +7,8 @@ namespace Whatever.ObjectControl
 
         private bool _isActivation;
 
+        public IBrainStrategy Brain => _behaviorStrategy;
+
         public int ReceiverID
         {
             get => _receiverID;

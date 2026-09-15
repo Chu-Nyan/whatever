@@ -53,13 +53,17 @@ namespace Whatever.ObjectControl
             InputSystem.Instance.Player.RightClick.RegisterPerformed(UseSupportSkill);
             InputSystem.Instance.Player.Ultimate.RegisterPerformed(UseUltimate);
 
-
             for (int i = 0; i < 4; i++)
             {
                 InputSystem.Instance.Player.Skills[i].RegisterPerformed(UseSkillSlot);
             }
             InputSystem.Instance.Player.SkillSlotSwap.RegisterPerformed(() => _isSkillSwap = true);
             InputSystem.Instance.Player.SkillSlotSwap.RegisterCanceled(() => _isSkillSwap = false);
+
+            for (int i = 0; i < 2; i++)
+            {
+                InputSystem.Instance.Player.Items[i].RegisterPerformed(UseItem);
+            }
         }
 
         public void Disable()
@@ -106,6 +110,11 @@ namespace Whatever.ObjectControl
 
             var skillID = _slotSys[(int)SkillSlotSystem.Slot.Slot1 + skillSlot];
             _offenseReceiver.UseSkill(skillID, InputSystem.Instance.Always.MousePosition);
+        }
+
+        private void UseItem(int itemSlot)
+        {
+            Debug.Log(itemSlot);
         }
 
         private void Dodge()

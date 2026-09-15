@@ -4,6 +4,7 @@ namespace Whatever.Entities.Items
 {
     public class Inventory
     {
+        public static readonly Inventory Empty = new(0);
         public const int PlayerCapacity = 80;
 
         public readonly ItemBase[] List;

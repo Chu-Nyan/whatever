@@ -5,7 +5,7 @@ namespace Whatever.ObjectControl
 {
     public class PlayerBrain : IBrainStrategy
     {
-        private readonly SkillSlotSystem _slotSys;
+        private QuickSlotLoadout _quickSlot;
 
         private IMovementReceiver _movementReceiver;
         private IOffenseReceiver _offenseReceiver;
@@ -18,13 +18,6 @@ namespace Whatever.ObjectControl
             get => BrainType.Player;
         }
 
-        public SkillSlotSystem SkillSlotSystem => _slotSys;
-
-        public PlayerBrain()
-        {
-            _slotSys = new();
-        }
-
         public void Tick()
         {
             MoveDirection();
@@ -35,10 +28,12 @@ namespace Whatever.ObjectControl
             if (obj is IMovementReceiver movement)
                 _movementReceiver = movement;
             if (obj is IOffenseReceiver offense)
-            {
                 _offenseReceiver = offense;
-                _slotSys.Clear();
-            }
+        }
+
+        public void SetupLoadout(QuickSlotLoadout quickSlot)
+        {
+            _quickSlot = quickSlot;
         }
 
         public void Enable()
@@ -90,17 +85,17 @@ namespace Whatever.ObjectControl
 
         private void UseBasicSkill()
         {
-            _offenseReceiver.UseSkill(_slotSys[SkillSlotSystem.Slot.Basic], InputSystem.Instance.Always.MousePosition);
+            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SkillSlot.Basic], InputSystem.Instance.Always.MousePosition);
         }
 
         private void UseSupportSkill()
         {
-            _offenseReceiver.UseSkill(_slotSys[SkillSlotSystem.Slot.Support], InputSystem.Instance.Always.MousePosition);
+            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SkillSlot.Support], InputSystem.Instance.Always.MousePosition);
         }
 
         private void UseUltimate()
         {
-            _offenseReceiver.UseSkill(_slotSys[SkillSlotSystem.Slot.Ultimate], InputSystem.Instance.Always.MousePosition);
+            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SkillSlot.Ultimate], InputSystem.Instance.Always.MousePosition);
         }
 
         private void UseSkillSlot(int skillSlot)
@@ -108,19 +103,20 @@ namespace Whatever.ObjectControl
             if (_isSkillSwap == true)
                 skillSlot += 4;
 
-            var skillID = _slotSys[(int)SkillSlotSystem.Slot.Slot1 + skillSlot];
+            var skillID = _quickSlot[QuickSlotLoadout.SkillSlot.Slot1 + skillSlot];
             _offenseReceiver.UseSkill(skillID, InputSystem.Instance.Always.MousePosition);
         }
 
         private void UseItem(int itemSlot)
         {
-            _offenseReceiver.UseItem(itemSlot);
+            var itemID = _quickSlot[(QuickSlotLoadout.ItemSlot)itemSlot];
+            _offenseReceiver.UseItem(itemID);
         }
 
         private void Dodge()
         {
             // TODO : 스킬 사용으로 변경
-            _offenseReceiver.UseSkill(_slotSys[SkillSlotSystem.Slot.Dodge], InputSystem.Instance.Always.MousePosition);
+            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SkillSlot.Dodge], InputSystem.Instance.Always.MousePosition);
             _movementReceiver.OrderDodge(_direction);
         }
 

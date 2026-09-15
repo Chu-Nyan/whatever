@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Whatever.Core;
+using Whatever.Entities.Items;
 using Whatever.GameSystems.Combat;
 using Whatever.ObjectControl;
 
@@ -19,6 +20,7 @@ namespace Whatever.Entities.Characters
         private CharacterStateContext _stateContext;
         private CombatSystem _combatSystem;
         private SkillBook _skillBook;
+        private Inventory _inventory;
 
         private event Action<Character> Deactivated;
 
@@ -84,6 +86,11 @@ namespace Whatever.Entities.Characters
             {
                 Dodge(_stateContext.ActionOrder);
             }
+        }
+
+        public void Setup(Inventory inven)
+        {
+            _inventory = inven;
         }
 
         private void Move(MovementOrder movementOrder)
@@ -161,6 +168,18 @@ namespace Whatever.Entities.Characters
             _skillBook.ForceUseSkill(skillID);
             bool result = _combatSystem.FireSkill(skillID, transform.position, targetPoint);
             Debug.Log(result + " Skill ID : " + skillID);
+        }
+
+        public void UseItem(int itemID)
+        {
+            if (_inventory.TryGetItem(itemID, out var item) == false)
+                return;
+            if (item.CanUse() == false)
+                return;
+
+            item.Use();
+            // TODO : 아이템 효과 적용
+            Debug.Log($"{itemID} Used");
         }
 
         public void SetActive(bool value)

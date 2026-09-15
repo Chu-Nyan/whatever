@@ -114,7 +114,7 @@ namespace Whatever.ObjectControl
 
         private void UseItem(int itemSlot)
         {
-            Debug.Log(itemSlot);
+            _offenseReceiver.UseItem(itemSlot);
         }
 
         private void Dodge()

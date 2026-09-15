@@ -8,5 +8,6 @@ namespace Whatever.ObjectControl
         public Transform transform { get; }
         public CombatSystem CombatSystem { get; }
         public void UseSkill(int skillID, Vector3 targetPoint);
+        public void UseItem(int itemID);
     }
 }

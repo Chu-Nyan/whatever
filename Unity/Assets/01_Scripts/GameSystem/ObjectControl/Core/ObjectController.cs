@@ -32,7 +32,6 @@ namespace Whatever.ObjectControl
         public void ConnectPlayerAgent(IInputReceiver receiver)
         {
             ConnectController(_player, receiver);
-            Debug.Log(_player);
             ((PlayerBrain)_player.Brain).SkillSlotSystem.CopySlot(_playerSkill);
             _player.SetActive(true);
         }

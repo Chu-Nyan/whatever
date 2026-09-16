@@ -1,0 +1,22 @@
+[
+  {
+    "ID": 1,
+    "SkillID": 1
+  },
+  {
+    "ID": 1,
+    "SkillID": 3
+  },
+  {
+    "ID": 2,
+    "SkillID": 2
+  },
+  {
+    "ID": 2,
+    "SkillID": 4
+  },
+  {
+    "ID": 2,
+    "SkillID": 5
+  }
+]

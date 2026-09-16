@@ -9,5 +9,7 @@ namespace Whatever.Entities.Characters
         public string DescKey;
         public FactionType Faction;
         public StatsData Stats;
+
+        public int SkillSetID;
     }
 }

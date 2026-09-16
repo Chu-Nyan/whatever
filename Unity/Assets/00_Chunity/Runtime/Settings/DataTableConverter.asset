@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Chunity.DataPipeline.DataTableConverter
   GoogleLoader:
     GoogleSheetID: 1ojmQBCvXK5TKlW2udlV2d20fCiHIF0YDpcipESKKokc
-    LastSync: "2026-09-17 \uC624\uC804 2:19:45"
+    LastSync: "2026-09-17 \uC624\uC804 3:30:11"
     Export: {fileID: 102900000, guid: f6d90e5d02d8aca4da1133b52bbaf240, type: 3}
   Config:
     _nameRow: 1
@@ -76,3 +76,8 @@ MonoBehaviour:
       NameSpace: Whatever.Entities.Characters
       ScriptPath: {fileID: 102900000, guid: 7a87a6015a24312448c810209f59cd07, type: 3}
       JsonPath: {fileID: 102900000, guid: f7a1f19fdd1471d4f9369588e158312a, type: 3}
+  - key: Skill_Set
+    value:
+      NameSpace: Whatever.Entities.Skill
+      ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
+      JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}

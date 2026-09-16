@@ -12,6 +12,7 @@ namespace Whatever.Entities.Characters
         public string NameKey;
         public string DescKey;
         public FactionType Faction;
+        public int SkillSetID;
         // </auto-generated>
 
         public int Key => ID;
@@ -24,6 +25,7 @@ namespace Whatever.Entities.Characters
                 NameKey = NameKey,
                 DescKey = DescKey,
                 Faction = Faction,
+                SkillSetID = SkillSetID
             };
         }
     }

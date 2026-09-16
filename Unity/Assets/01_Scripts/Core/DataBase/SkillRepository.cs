@@ -6,6 +6,7 @@ namespace Whatever.Core
     public class SkillRepository
     {
         public readonly SkillBaseData[] Skills;
+        public readonly int[][] SkillSet;
 
         private readonly SequenceData[][] _sequenceDatas;
         private readonly IEffectData[][] _effectData;
@@ -26,6 +27,8 @@ namespace Whatever.Core
             _effectData = DataBase.ConvertToArray<SkillEffectDto, IEffectData>("SkillEffectData", a => GetEffectData(a.EffectType, a.EffectID));
             _sequenceDatas = DataBase.ConvertToArray<SkillSequenceDto, SequenceData>("SkillSequenceData", a => a.ToData(_hitboxesData[a.HitboxID], _effectData[a.EffectID]));
             Skills = DataBase.ConvertToData<SkillBaseDto, SkillBaseData>("SkillBaseData", a => a.ToData(_sequenceDatas[a.CollisionSequenceID]));
+
+            SkillSet = DataBase.ConvertToArray<SkillSetDto, int>("SkillSetData", a => a.SkillID);
         }
 
         private IEffectData GetEffectData(EffectType type, int id)

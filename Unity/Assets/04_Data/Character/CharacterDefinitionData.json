@@ -3,12 +3,14 @@
     "ID": 1,
     "NameKey": "character.player.name",
     "DescKey": "character.player.desc",
-    "Faction": 0
+    "Faction": 0,
+    "SkillSetID": 0
   },
   {
     "ID": 2,
     "NameKey": "character.rabbit.name",
     "DescKey": "character.rabbit.desc",
-    "Faction": 1
+    "Faction": 1,
+    "SkillSetID": 1
   }
 ]

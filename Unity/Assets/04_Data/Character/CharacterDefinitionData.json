@@ -1,0 +1,14 @@
+[
+  {
+    "ID": 1,
+    "NameKey": "character.player.name",
+    "DescKey": "character.player.desc",
+    "Faction": 0
+  },
+  {
+    "ID": 2,
+    "NameKey": "character.rabbit.name",
+    "DescKey": "character.rabbit.desc",
+    "Faction": 1
+  }
+]

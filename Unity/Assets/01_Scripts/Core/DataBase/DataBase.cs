@@ -9,11 +9,13 @@ namespace Whatever.Core
     {
         public readonly WorldProfile WorldProfile;
         public readonly SkillRepository SkillRepo;
+        public readonly CharacterRepository CharacterRepo;
 
         public DataBase()
         {
             WorldProfile = AssetManager.LoadAssetSync<WorldProfile>("WorldProfile");
             SkillRepo = new();
+            CharacterRepo = new();
         }
 
         public static K[] ConvertToData<T, K>(T[] dtos, Func<T, K> toData) where T : IHasKey

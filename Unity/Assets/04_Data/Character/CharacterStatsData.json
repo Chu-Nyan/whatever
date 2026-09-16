@@ -1,0 +1,38 @@
+[
+  {
+    "ID": 1,
+    "Health": 50.0,
+    "HealthRegen": 0.0,
+    "Mana": 30.0,
+    "ManaRegen": 2.0,
+    "Stamina": 100.0,
+    "StaminaRegen": 10.0,
+    "AttackPower": 10.0,
+    "MagicPower": 10.0,
+    "Defense": 5.0,
+    "MagicDefense": 5.0,
+    "MoveSpeed": 1.0,
+    "FireRes": 0.0,
+    "IceRes": 0.0,
+    "LightningRes": 0.0,
+    "WaterRes": 0.0
+  },
+  {
+    "ID": 2,
+    "Health": 20.0,
+    "HealthRegen": 0.0,
+    "Mana": 0.0,
+    "ManaRegen": 0.0,
+    "Stamina": 30.0,
+    "StaminaRegen": 5.0,
+    "AttackPower": 2.0,
+    "MagicPower": 0.0,
+    "Defense": 1.0,
+    "MagicDefense": 2.0,
+    "MoveSpeed": 1.3,
+    "FireRes": -10.0,
+    "IceRes": 10.0,
+    "LightningRes": 0.0,
+    "WaterRes": 0.0
+  }
+]

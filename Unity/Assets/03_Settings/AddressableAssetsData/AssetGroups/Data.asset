@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Data
   m_GUID: 9762485990f4c574e8424149b75ffc0c
   m_SerializeEntries:
+  - m_GUID: 07756606df927864e84a6a002b418c5e
+    m_Address: ItemEquipmentData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0cfda8613ff560a4fb2173123b1535aa
     m_Address: SkillEffectDotData
     m_ReadOnly: 0
@@ -50,6 +55,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50550d3e40ddcdb4d8955342b81fc681
+    m_Address: ItemEquipmentStatsData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 621e5c445b116f64d8e7725027f49e2b
     m_Address: SkillSetData
     m_ReadOnly: 0
@@ -72,6 +82,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dd0df8cbd964ed34ba311af006696210
     m_Address: CharacterStatsData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dee6885599d03a643a16e9730ed5f664
+    m_Address: ItemBaseData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eecc1f552f00f6447b0686ec21baa748
+    m_Address: ItemConsumableData
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

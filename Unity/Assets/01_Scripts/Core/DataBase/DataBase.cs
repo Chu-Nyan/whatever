@@ -1,6 +1,7 @@
 using Chunity.Core;
 using Chunity.Utility;
 using System;
+using System.Collections.Generic;
 using Whatever.GameSystems;
 
 namespace Whatever.Core
@@ -10,12 +11,14 @@ namespace Whatever.Core
         public readonly WorldProfile WorldProfile;
         public readonly SkillRepository SkillRepo;
         public readonly CharacterRepository CharacterRepo;
+        public readonly ItemRepository ItemRepo;
 
         public DataBase()
         {
             WorldProfile = AssetManager.LoadAssetSync<WorldProfile>("WorldProfile");
             SkillRepo = new();
             CharacterRepo = new();
+            ItemRepo = new();
         }
 
         public static K[] ConvertToData<T, K>(T[] dtos, Func<T, K> toData) where T : IHasKey
@@ -64,11 +67,46 @@ namespace Whatever.Core
 
             return result;
         }
-
         public static K[][] ConvertToArray<T, K>(string path, Func<T, K> converter) where T : IHasKey
         {
             var dtos = JsonHelper.DeserializeObject<T>(path);
             return ConvertToArray(dtos, converter);
         }
+
+        public static Dictionary<int, K[]> ConvertToDictionary<T, K>(T[] dtos, Func<T, K> converter) where T : IHasKey
+        {
+            var result = new Dictionary<int, K[]>();
+
+            int i = 0;
+            while (i < dtos.Length)
+            {
+                int start = i;
+                int currentKey = dtos[start].Key;
+
+                while (i < dtos.Length && dtos[i].Key == currentKey)
+                {
+                    i++;
+                }
+
+                int size = i - start;
+                var array = new K[size];
+
+                for (int j = 0; j < size; j++)
+                {
+                    array[j] = converter(dtos[start + j]);
+                }
+
+                result[currentKey] = array;
+            }
+
+            return result;
+        }
+
+        public static Dictionary<int, K[]> ConvertToDictionary<T, K>(string path, Func<T, K> converter) where T : IHasKey
+        {
+            var dtos = JsonHelper.DeserializeObject<T>(path);
+            return ConvertToDictionary(dtos, converter);
+        }
+
     }
 }

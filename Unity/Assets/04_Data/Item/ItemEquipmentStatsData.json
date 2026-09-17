@@ -1,0 +1,20 @@
+[
+  {
+    "ID": 1,
+    "StatType": 6,
+    "ModifierType": 0,
+    "Value": 10.0
+  },
+  {
+    "ID": 2,
+    "StatType": 8,
+    "ModifierType": 0,
+    "Value": 5.0
+  },
+  {
+    "ID": 2,
+    "StatType": 9,
+    "ModifierType": 0,
+    "Value": 5.0
+  }
+]

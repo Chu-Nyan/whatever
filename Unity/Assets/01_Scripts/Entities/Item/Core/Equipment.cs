@@ -2,13 +2,13 @@ namespace Whatever.Entities.Items
 {
     public class Equipment : ItemBase
     {
-        public readonly EquipmentDefinitionData _equipmentDef;
-        public EquipmentInstanceData _equipmentInst;
+        public readonly EquipmentDefinitionData EquipmentDef;
+        public EquipmentInstanceData EquipmentInst;
 
         public Equipment(ItemDefinitionData item, EquipmentDefinitionData equipment) : base(item)
         {
-            _equipmentDef = equipment;
-            _equipmentInst = new();
+            EquipmentDef = equipment;
+            EquipmentInst = new();
         }
 
         public override bool CanUse()
@@ -18,7 +18,7 @@ namespace Whatever.Entities.Items
 
         public override void Use()
         {
-            _equipmentInst.IsEquipped = !_equipmentInst.IsEquipped;
+            EquipmentInst.IsEquipped = !EquipmentInst.IsEquipped;
         }
     }
 }

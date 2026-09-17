@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Chunity.DataPipeline.DataTableConverter
   GoogleLoader:
     GoogleSheetID: 1ojmQBCvXK5TKlW2udlV2d20fCiHIF0YDpcipESKKokc
-    LastSync: "2026-09-17 \uC624\uC804 3:30:11"
+    LastSync: "2026-09-18 \uC624\uC804 1:21:01"
     Export: {fileID: 102900000, guid: f6d90e5d02d8aca4da1133b52bbaf240, type: 3}
   Config:
     _nameRow: 1
@@ -81,3 +81,23 @@ MonoBehaviour:
       NameSpace: Whatever.Entities.Skill
       ScriptPath: {fileID: 102900000, guid: b744e8c2df11a4145859e62d71ab5959, type: 3}
       JsonPath: {fileID: 102900000, guid: df6094f232a95414391cb945edd147a9, type: 3}
+  - key: Item_Base
+    value:
+      NameSpace: Whatever.Entities.Items
+      ScriptPath: {fileID: 102900000, guid: 94a875c46a8f2ba4793be932edd2bfb9, type: 3}
+      JsonPath: {fileID: 102900000, guid: 1f2382585b0cb49448f9b57f24019c3c, type: 3}
+  - key: Item_Equipment
+    value:
+      NameSpace: Whatever.Entities.Items
+      ScriptPath: {fileID: 102900000, guid: 94a875c46a8f2ba4793be932edd2bfb9, type: 3}
+      JsonPath: {fileID: 102900000, guid: 1f2382585b0cb49448f9b57f24019c3c, type: 3}
+  - key: Item_Equipment_Stats
+    value:
+      NameSpace: Whatever.Entities.Items
+      ScriptPath: {fileID: 102900000, guid: 94a875c46a8f2ba4793be932edd2bfb9, type: 3}
+      JsonPath: {fileID: 102900000, guid: 1f2382585b0cb49448f9b57f24019c3c, type: 3}
+  - key: Item_Consumable
+    value:
+      NameSpace: Whatever.Entities.Items
+      ScriptPath: {fileID: 102900000, guid: 94a875c46a8f2ba4793be932edd2bfb9, type: 3}
+      JsonPath: {fileID: 102900000, guid: 1f2382585b0cb49448f9b57f24019c3c, type: 3}

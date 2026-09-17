@@ -32,5 +32,4 @@ namespace Whatever.Entities.Characters
             _bases = baseStats;
         }
     }
-
 }

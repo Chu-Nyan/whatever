@@ -5,12 +5,12 @@ namespace Whatever.Entities.Items
     public class Consumable : ItemBase
     {
         public readonly ConsumableDefinitionData ConsumableDef;
-        public ConsumableInstanceData _ConsumableInst;
+        public ConsumableInstanceData ConsumableInst;
 
         public Consumable(ItemDefinitionData item, ConsumableDefinitionData consumable) : base(item)
         {
             ConsumableDef = consumable;
-            _ConsumableInst = new();
+            ConsumableInst = new();
         }
 
         public override bool CanUse()

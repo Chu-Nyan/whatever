@@ -12,24 +12,22 @@ namespace Whatever.Entities.Characters
         public const string Asset_Character = "Character";
 
         private readonly ObjectPooling<Character> _pool;
-        private LoadoutContainer _loadoutContainer;
+        private PersistentDataContainer _persistentContainer;
 
         public CharacterFactory()
         {
             _pool = new(() => AssetManager.InstantiateAssetSync<Character>(Asset_Character));
         }
 
-        public void Init(LoadoutContainer loadoutContainer)
+        public void Init(PersistentDataContainer persistentContainer)
         {
-            _loadoutContainer = loadoutContainer;
+            _persistentContainer = persistentContainer;
         }
 
-        public Character CreateCharacter(int id, Vector3 pos, string invenKey)
+        public Character CreateCharacter(int id, Vector3 pos, string key = null)
         {
-            if (_loadoutContainer.TryGetInventory(invenKey, out var inven) == false)
-            {
+            if (_persistentContainer.TryGetInventory(key, out var inven) == false)
                 inven = Inventory.Empty;
-            }
 
             var data = DataBase.Instance.CharacterRepo.DefinitionData[id];
             var actor = _pool.Dequeue();

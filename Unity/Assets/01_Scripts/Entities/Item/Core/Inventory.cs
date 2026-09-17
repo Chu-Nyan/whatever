@@ -9,6 +9,9 @@ namespace Whatever.Entities.Items
 
         public readonly ItemBase[] List;
         private readonly Dictionary<ItemBase, int> _indexByItem;
+        private int _count;
+
+        public int Count => _count;
 
         public Inventory(int capacity)
         {
@@ -25,6 +28,7 @@ namespace Whatever.Entities.Items
 
                 List[i] = item;
                 _indexByItem.Add(item, i);
+                _count++;
                 return true;
             }
 
@@ -64,6 +68,7 @@ namespace Whatever.Entities.Items
             int index = _indexByItem[item];
             List[index] = null;
             _indexByItem.Remove(item);
+            _count--;
         }
     }
 }

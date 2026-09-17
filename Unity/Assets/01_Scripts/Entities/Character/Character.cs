@@ -19,6 +19,8 @@ namespace Whatever.Entities.Characters
         private CharacterState _state;
         private CharacterStateContext _stateContext;
         private CombatSystem _combatSystem;
+
+        private CharacterData _data;
         private SkillBook _skillBook;
         private Inventory _inventory;
 
@@ -40,6 +42,8 @@ namespace Whatever.Entities.Characters
             _stateContext = new();
             _state = new(_stateContext);
             _combatSystem = new(_instanceID);
+
+            _data = new();
             _skillBook = new();
         }
 
@@ -88,8 +92,9 @@ namespace Whatever.Entities.Characters
             }
         }
 
-        public void Setup(Inventory inven)
+        public void Setup(CharacterDefinitionData def, Inventory inven)
         {
+            _data.Setup(def);
             _inventory = inven;
         }
 

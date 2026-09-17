@@ -17,5 +17,24 @@ namespace Whatever.Entities.Characters
         public float IceRes;
         public float LightningRes;
         public float WaterRes;
+
+        public void CopyFrom(StatsData source)
+        {
+            Health = source.Health;
+            HealthRegen = source.HealthRegen;
+            Mana = source.Mana;
+            ManaRegen = source.ManaRegen;
+            Stamina = source.Stamina;
+            StaminaRegen = source.StaminaRegen;
+            AttackPower = source.AttackPower;
+            MagicPower = source.MagicPower;
+            Defense = source.Defense;
+            MagicDefense = source.MagicDefense;
+            MoveSpeed = source.MoveSpeed;
+            FireRes = source.FireRes;
+            IceRes = source.IceRes;
+            LightningRes = source.LightningRes;
+            WaterRes = source.WaterRes;
+        }
     }
 }

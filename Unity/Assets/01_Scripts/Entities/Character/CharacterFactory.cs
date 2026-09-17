@@ -1,6 +1,7 @@
 using Chunity.Core;
 using Chunity.Utility;
 using UnityEngine;
+using Whatever.Core;
 using Whatever.Entities.Items;
 using Whatever.GameSystems;
 
@@ -23,25 +24,26 @@ namespace Whatever.Entities.Characters
             _loadoutContainer = loadoutContainer;
         }
 
-        public Character CreateCharacter(Vector3 pos, string key)
+        public Character CreateCharacter(int id, Vector3 pos, string invenKey)
         {
-            if (_loadoutContainer.TryGetInventory(key, out var inven) == false)
+            if (_loadoutContainer.TryGetInventory(invenKey, out var inven) == false)
             {
                 inven = Inventory.Empty;
             }
 
+            var data = DataBase.Instance.CharacterRepo.DefinitionData[id];
             var actor = _pool.Dequeue();
             actor.RegisterDeactivated(_pool.Enqueue);
             actor.SetPositionWithNavMash(pos);
-            actor.Setup(inven);
+            actor.Setup(data, inven);
             actor.SetActive(true);
 
             return actor;
         }
 
-        public Character CreateCharacter(Vector3 pos)
+        public Character CreateCharacter(int id, Vector3 pos)
         {
-            return CreateCharacter(pos, "Empty");
+            return CreateCharacter(id, pos, "Empty");
         }
     }
 }

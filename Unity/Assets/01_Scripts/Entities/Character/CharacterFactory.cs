@@ -36,6 +36,15 @@ namespace Whatever.Entities.Characters
             actor.RegisterDeactivated(_pool.Enqueue);
             actor.SetPositionWithNavMash(pos);
             actor.Setup(data, inven);
+            var skillSet = DataBase.Instance.SkillRepo.SkillSet[data.SkillSetID];
+            if (skillSet != null)
+            {
+                for (int i = 0; i < skillSet.Length; i++)
+                {
+                    actor.SkillBook.AddSkill(skillSet[i]);
+                }
+            }
+
             actor.SetActive(true);
 
             return actor;

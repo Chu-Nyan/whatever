@@ -8,7 +8,7 @@ namespace Whatever.Entities.Characters
         public string NameKey;
         public string DescKey;
         public FactionType Faction;
-        public StatsData Stats;
+        public float[] Stats;
 
         public int SkillSetID;
     }

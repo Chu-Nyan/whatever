@@ -3,17 +3,17 @@ namespace Whatever.Entities.Characters
     public class CharacterData
     {
         public CharacterDefinitionData Def;
-        public StatsData Ins;
+        public Stats StatIns;
 
         public CharacterData()
         {
-            Ins = new();
+            StatIns = new();
         }
 
         public void Setup(CharacterDefinitionData def)
         {
             Def = def;
-            Ins.CopyFrom(def.Stats);
+            StatIns.SetupBase(def.Stats);
         }
     }
 }

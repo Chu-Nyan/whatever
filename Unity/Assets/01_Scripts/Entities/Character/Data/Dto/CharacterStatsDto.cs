@@ -27,26 +27,32 @@ namespace Whatever.Entities.Characters
 
         public int Key => ID;
 
-        public StatsData ToData()
+        public float[] ToData()
         {
-            return new StatsData
-            {
-                Health = Health,
-                HealthRegen = HealthRegen,
-                Mana = Mana,
-                ManaRegen = ManaRegen,
-                Stamina = Stamina,
-                StaminaRegen = StaminaRegen,
-                AttackPower = AttackPower,
-                MagicPower = MagicPower,
-                Defense = Defense,
-                MagicDefense = MagicDefense,
-                MoveSpeed = MoveSpeed,
-                FireRes = FireRes,
-                IceRes = IceRes,
-                LightningRes = LightningRes,
-                WaterRes = WaterRes
-            };
+            var stats = new float[Stats.StatCount];
+
+            stats[(int)StatType.Health] = Health;
+            stats[(int)StatType.HealthRegen] = HealthRegen;
+
+            stats[(int)StatType.Mana] = Mana;
+            stats[(int)StatType.ManaRegen] = ManaRegen;
+
+            stats[(int)StatType.Stamina] = Stamina;
+            stats[(int)StatType.StaminaRegen] = StaminaRegen;
+
+            stats[(int)StatType.AttackPower] = AttackPower;
+            stats[(int)StatType.MagicPower] = MagicPower;
+
+            stats[(int)StatType.Defense] = Defense;
+            stats[(int)StatType.MagicDefense] = MagicDefense;
+
+            stats[(int)StatType.MoveSpeed] = MoveSpeed;
+
+            stats[(int)StatType.FireRes] = FireRes;
+            stats[(int)StatType.IceRes] = IceRes;
+            stats[(int)StatType.LightningRes] = LightningRes;
+            stats[(int)StatType.WaterRes] = WaterRes;
+            return stats;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Chunity.Framework
             Type type = typeof(T);
             if (_uiByID.TryGetValue(type, out var ui) == false)
             {
-                ui = AssetManager.InstantiateAssetSync<T>(string.Format(_pathFormat, type));
+                ui = AssetManager.InstantiateAssetSync<T>(string.Format(_pathFormat, type.Name));
                 _uiByID[type] = ui;
             }
 

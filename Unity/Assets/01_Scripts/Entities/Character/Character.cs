@@ -28,6 +28,7 @@ namespace Whatever.Entities.Characters
 
         public int InstanceID => _instanceID;
         public int ReceiverID => _instanceID;
+        public CharacterData Data => _data;
         public CombatSystem CombatSystem => _combatSystem;
         public SkillBook SkillBook => _skillBook;
 

@@ -1,6 +1,7 @@
 // Do not modify the namespace, class name, or Auto generated fields.
 // Modify the Excel Loader instead.
 using Whatever.Core;
+using Whatever.GameSystems.Stat;
 
 namespace Whatever.Entities.Characters
 {

@@ -1,6 +1,6 @@
-namespace Whatever.Entities.Characters
+namespace Whatever.GameSystems.Stat
 {
-    public class StatModifier
+    public struct StatModifier
     {
         public StatType Stat;
         public ModifierType Modifier;

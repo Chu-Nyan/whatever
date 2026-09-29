@@ -1,4 +1,4 @@
-namespace Whatever.Entities.Characters
+namespace Whatever.GameSystems.Stat
 {
     public enum ModifierType
     {

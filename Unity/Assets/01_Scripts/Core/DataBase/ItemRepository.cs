@@ -1,5 +1,5 @@
-using Whatever.Entities.Characters;
 using Whatever.Entities.Items;
+using Whatever.GameSystems.Stat;
 
 namespace Whatever.Core
 {

@@ -1,4 +1,4 @@
-using Whatever.Entities.Characters;
+using Whatever.GameSystems.Stat;
 
 namespace Whatever.Entities.Items
 {

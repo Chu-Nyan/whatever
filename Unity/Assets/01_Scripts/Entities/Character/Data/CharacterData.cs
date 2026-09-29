@@ -1,3 +1,5 @@
+using Whatever.GameSystems.Stat;
+
 namespace Whatever.Entities.Characters
 {
     public class CharacterData

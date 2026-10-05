@@ -1,6 +1,9 @@
 using Chunity.Framework;
+using System.Collections.Generic;
 using UnityEngine;
+using Whatever.GameSystems.Combat;
 using Whatever.GameSystems.Stat;
+using Whatever.ObjectControl;
 
 namespace Whatever.UI
 {
@@ -8,7 +11,14 @@ namespace Whatever.UI
     {
         [SerializeField]
         private StatsViewer _stats;
-        private Stats _statTarget;
+        [SerializeField]
+        private QuickSlotUIContent _quickSlot;
+        private Dictionary<int, int> _quickslotBySkillID;
+
+        public HudUI()
+        {
+            _quickslotBySkillID = new(10);
+        }
 
         public override void Show()
         {
@@ -20,17 +30,46 @@ namespace Whatever.UI
             gameObject.SetActive(false);
         }
 
-        public void Setup(Stats statTarget)
+        public void SetupQuickSlot(QuickSlotLoadout loadout, SkillBook book)
         {
-            _statTarget = statTarget;
-            Refresh();
+            _quickslotBySkillID.Clear();
+            var startIndex = (int)QuickSlotLoadout.SkillSlot.Dodge;
+            for (int i = 0; i < 10; i++)
+            {
+                var skillID = loadout[(QuickSlotLoadout.SkillSlot)startIndex + i];
+                if (skillID == 0)
+                {
+                    _quickSlot.SetupEmpty(i);
+                }
+                else if (book.Contains(skillID) == false)
+                {
+                    _quickSlot.SetupFalse(i);
+                }
+                else
+                {
+                    _quickSlot.SetupSkillSlot(i, null, book[skillID].RemainingCooldown);
+                    _quickslotBySkillID[skillID] = i;
+                }
+            }
         }
 
-        private void Refresh()
+        public void RefreshStats(Stats stat)
         {
-            _stats.SetHP(_statTarget[ResourceType.Health] / _statTarget[StatType.Health]);
-            _stats.SetMP(_statTarget[ResourceType.Mana] / _statTarget[StatType.Mana]);
-            _stats.SetStamina(_statTarget[ResourceType.Stamina] / _statTarget[StatType.Stamina]);
+            _stats.SetHP(stat[ResourceType.Health] / stat[StatType.Health]);
+            _stats.SetMP(stat[ResourceType.Mana] / stat[StatType.Mana]);
+            _stats.SetStamina(stat[ResourceType.Stamina] / stat[StatType.Stamina]);
+        }
+
+        public void RefreshSkillSlots(SkillBook book)
+        {
+            var used = book.Used;
+            for (int i = 0; i < used.Count; i++)
+            {
+                if (_quickslotBySkillID.TryGetValue(used[i].ID, out var index) == false)
+                    continue;
+
+                _quickSlot.RefreshSkillCooldown(index, used[i].RemainingCooldown);
+            }
         }
     }
 }

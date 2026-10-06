@@ -38,9 +38,12 @@ namespace Whatever.UI
             observer.SkillCooldownChanged += RefreshSkillSlots;
         }
 
-        public void SetupQuickSlot(QuickSlotLoadout loadout, SkillBook book)
+        public void SetupQuickSlot(QuickSlotLoadout loadout, IOffenseReceiver offense)
         {
             _quickslotBySkillID.Clear();
+            var cooldownSys = offense.CooldownSys;
+            var skillBook = offense.SkillBook;
+
             var startIndex = (int)QuickSlotLoadout.SkillSlot.Dodge;
             for (int i = 0; i < 10; i++)
             {
@@ -49,13 +52,13 @@ namespace Whatever.UI
                 {
                     _quickSlot.SetupEmpty(i);
                 }
-                else if (book.Contains(skillID) == false)
+                else if (skillBook.Contains(skillID) == false)
                 {
                     _quickSlot.SetupFalse(i);
                 }
                 else
                 {
-                    _quickSlot.SetupSkillSlot(i, null, book[skillID].RemainingCooldown);
+                    _quickSlot.SetupSkillSlot(i, null, cooldownSys.GetRemainTime(CooldownSystem.Category.Skill, skillID));
                     _quickslotBySkillID[skillID] = i;
                 }
             }
@@ -68,15 +71,15 @@ namespace Whatever.UI
             _stats.SetStamina(stat[ResourceType.Stamina] / stat[StatType.Stamina]);
         }
 
-        public void RefreshSkillSlots(SkillBook book)
+        public void RefreshSkillSlots(CooldownSystem sys)
         {
-            var used = book.Used;
-            for (int i = 0; i < used.Count; i++)
+            foreach (var item in _quickslotBySkillID)
             {
-                if (_quickslotBySkillID.TryGetValue(used[i].Data.ID, out var index) == false)
+                if (sys.ContainSkills(item.Key) == false)
                     continue;
 
-                _quickSlot.RefreshSkillCooldown(index, used[i].RemainingCooldown);
+                float remain = sys.GetRemainTime(CooldownSystem.Category.Skill, item.Key);
+                _quickSlot.RefreshSkillCooldown(item.Value, remain);
             }
         }
     }

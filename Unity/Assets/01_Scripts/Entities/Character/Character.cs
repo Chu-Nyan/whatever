@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Whatever.Core;
 using Whatever.Entities.Items;
+using Whatever.GameSystems;
 using Whatever.GameSystems.Combat;
 using Whatever.ObjectControl;
 
@@ -19,6 +20,7 @@ namespace Whatever.Entities.Characters
         private CharacterState _state;
         private CharacterStateContext _stateContext;
         private CombatSystem _combatSystem;
+        private CooldownSystem _cooldownSys;
 
         private CharacterData _data;
         private SkillBook _skillBook;
@@ -30,6 +32,7 @@ namespace Whatever.Entities.Characters
         public int ReceiverID => _instanceID;
         public CharacterData Data => _data;
         public CombatSystem CombatSystem => _combatSystem;
+        public CooldownSystem CooldownSys => _cooldownSys;
         public SkillBook SkillBook => _skillBook;
 
 
@@ -42,6 +45,7 @@ namespace Whatever.Entities.Characters
             _nav.enabled = true;
             _stateContext = new();
             _state = new(_stateContext);
+            _cooldownSys = new();
             _combatSystem = new(_instanceID);
 
             _data = new();
@@ -50,8 +54,7 @@ namespace Whatever.Entities.Characters
 
         private void Update()
         {
-            _skillBook.Tick();
-
+            _cooldownSys.Tick();
             CheckExternalConditions();
             _state.Update(_stateContext);
             ExcuteMovementOrder();
@@ -167,12 +170,17 @@ namespace Whatever.Entities.Characters
         {
             if (_skillBook.CanUse(skillID) == false)
             {
-                Debug.Log(false + " Skill ID : " + skillID);
+                Debug.Log("Use failed" + " Skill ID : " + skillID);
+                return;
+            }
+            if (_cooldownSys.ContainSkills(skillID) == true)
+            {
+                Debug.Log("Cooldown remained" + " Skill ID : " + skillID);
                 return;
             }
 
-            _skillBook.ForceUseSkill(skillID);
             bool result = _combatSystem.FireSkill(skillID, transform.position, targetPoint);
+            _cooldownSys.Set(CooldownSystem.Category.Skill, skillID, _skillBook[skillID].Data.Cooldown);
             Debug.Log(result + " Skill ID : " + skillID);
         }
 

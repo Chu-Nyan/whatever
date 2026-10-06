@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using Whatever.Entities.Characters;
-using Whatever.GameSystems.Combat;
 using Whatever.GameSystems.Stat;
 
 namespace Whatever.GameSystems
@@ -13,7 +12,7 @@ namespace Whatever.GameSystems
 
         public event Action<Character> CharacterChanged;
         public event Action<Stats> StatsChanged;
-        public event Action<SkillBook> SkillCooldownChanged;
+        public event Action<CooldownSystem> SkillCooldownChanged;
 
         private void Awake()
         {
@@ -36,9 +35,9 @@ namespace Whatever.GameSystems
                 _observerData.CaptureStats(_character.Data.StatIns);
                 StatsChanged?.Invoke(_character.Data.StatIns);
             }
-            if (_character.SkillBook.Used.Count > 0)
+            if (_character.CooldownSys.Count > 0)
             {
-                SkillCooldownChanged?.Invoke(_character.SkillBook);
+                SkillCooldownChanged?.Invoke(_character.CooldownSys);
             }
         }
 

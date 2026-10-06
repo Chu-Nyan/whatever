@@ -41,7 +41,7 @@ namespace Whatever.Facade
             var quickslot = _persistentContainer.GetQuickSlot("player");
             var loadout = _persistentContainer.GetQuickSlot("player");
             _controller.ConnectPlayerAgent(character, quickslot);
-            _hudUI.SetupQuickSlot(loadout, character.SkillBook);
+            _hudUI.SetupQuickSlot(loadout, character);
             _observer.SetCharacter(character);
         }
     }

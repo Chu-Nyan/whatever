@@ -7,6 +7,8 @@ namespace Whatever.GameSystems.Combat
     {
         private readonly Dictionary<int, SkillCore> _skills;
 
+        public int Count => _skills.Count;
+
         public SkillCore this[int id] => _skills[id];
 
         public SkillBook()

@@ -25,6 +25,8 @@ namespace Whatever.Facade
             _hudUI = hudUI;
             _persistentContainer = persistentContainer;
             _observer = observer;
+
+            _hudUI.SetupBtn(OpenInventory, OpenSkillBook, OpenSetting);
         }
 
         public void InitObserverCallbacks()
@@ -48,6 +50,21 @@ namespace Whatever.Facade
             _controller.ConnectPlayerAgent(character, _quickslot);
             _observer.SetCharacter(character);
             SetupHudUI(character);
+        }
+
+        private void OpenInventory()
+        {
+            Debug.Log($"{_player.Inventory.Count}");
+        }
+
+        private void OpenSkillBook()
+        {
+            Debug.Log($"{_player.SkillBook.Count}");
+        }
+
+        private void OpenSetting()
+        {
+            Debug.Log($"Open Setting");
         }
 
         private void RefreshHudUIStats(Stats stat)

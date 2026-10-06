@@ -26,12 +26,8 @@ namespace Whatever.ObjectControl
             }
         }
 
-        public void ConnectPlayerAgent(IInputReceiver receiver)
+        public void ConnectPlayerAgent(IInputReceiver receiver, QuickSlotLoadout loadout)
         {
-            var loadout = new QuickSlotLoadout();
-            loadout.CopySkillSlot(new int[] { 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4 });
-            loadout.CopyItemSlot(new int[] { 1, 2 });
-
             ConnectController(_player, receiver);
             var brain = ((PlayerBrain)_player.Brain);
             brain.SetupLoadout(loadout);

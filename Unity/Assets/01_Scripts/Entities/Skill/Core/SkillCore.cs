@@ -10,6 +10,8 @@ namespace Whatever.Entities.Skill
         private float _remainingCooldown;
         private bool _canUse;
 
+        public float RemainingCooldown => _remainingCooldown;
+
         public bool CanUse
         {
             get => _canUse;

@@ -9,10 +9,18 @@ namespace Whatever.GameSystems.Combat
         private readonly Dictionary<int, SkillCore> _skills;
         private readonly List<SkillCore> _used;
 
+        public SkillCore this[int id] => _skills[id];
+        public List<SkillCore> Used => _used;
+
         public SkillBook()
         {
             _skills = new();
             _used = new();
+        }
+
+        public bool Contains(int id)
+        {
+            return _skills.ContainsKey(id);
         }
 
         public bool CanUse(int id)
@@ -53,6 +61,5 @@ namespace Whatever.GameSystems.Combat
                     _used.RemoveAt(i);
             }
         }
-
     }
 }

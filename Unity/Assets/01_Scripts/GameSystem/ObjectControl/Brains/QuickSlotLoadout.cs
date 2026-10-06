@@ -35,7 +35,7 @@ namespace Whatever.ObjectControl
         {
             for (int i = 0; i < skillSlot.Length; i++)
             {
-                _skillIDBySlot[i] = skillSlot[i];
+                BindingSlot((SkillSlot)i, skillSlot[i]);
             }
         }
 

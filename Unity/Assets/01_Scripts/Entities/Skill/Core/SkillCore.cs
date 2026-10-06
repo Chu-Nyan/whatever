@@ -5,7 +5,7 @@ namespace Whatever.Entities.Skill
 {
     public class SkillCore
     {
-        public readonly int ID;
+        public readonly int InstanceID;
         private SkillBaseData _data;
         private float _remainingCooldown;
         private bool _canUse;
@@ -24,7 +24,7 @@ namespace Whatever.Entities.Skill
 
         public SkillCore()
         {
-            ID = IDGenerator.Next();
+            InstanceID = IDGenerator.Next();
         }
 
         public void Setup(SkillBaseData data)

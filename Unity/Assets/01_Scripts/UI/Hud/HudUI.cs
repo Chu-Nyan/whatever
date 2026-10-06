@@ -65,7 +65,7 @@ namespace Whatever.UI
             var used = book.Used;
             for (int i = 0; i < used.Count; i++)
             {
-                if (_quickslotBySkillID.TryGetValue(used[i].ID, out var index) == false)
+                if (_quickslotBySkillID.TryGetValue(used[i].Data.ID, out var index) == false)
                     continue;
 
                 _quickSlot.RefreshSkillCooldown(index, used[i].RemainingCooldown);

@@ -12,13 +12,20 @@ namespace Whatever.Facade
         private readonly ObjectController _controller;
         private readonly PersistentDataContainer _persistentContainer;
         private readonly HudUI _hudUI;
+        private readonly PlayerCharacterObserver _observer;
 
-        public PlayerFacade(CharacterFactory factory, ObjectController controller, HudUI hudUI, PersistentDataContainer persistentContainer)
+        public PlayerFacade(CharacterFactory factory, ObjectController controller, HudUI hudUI, PersistentDataContainer persistentContainer, PlayerCharacterObserver observer)
         {
             _factory = factory;
             _controller = controller;
             _hudUI = hudUI;
             _persistentContainer = persistentContainer;
+            _observer = observer;
+        }
+
+        public void InitObserverCallbacks()
+        {
+            _hudUI.InitPlayerObserver(_observer);
         }
 
         public void CreateCharacter(int id, Vector3 position)
@@ -35,6 +42,7 @@ namespace Whatever.Facade
             var loadout = _persistentContainer.GetQuickSlot("player");
             _controller.ConnectPlayerAgent(character, quickslot);
             _hudUI.SetupQuickSlot(loadout, character.SkillBook);
+            _observer.SetCharacter(character);
         }
     }
 }

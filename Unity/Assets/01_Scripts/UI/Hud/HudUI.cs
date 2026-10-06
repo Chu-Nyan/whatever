@@ -1,6 +1,7 @@
 using Chunity.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using Whatever.GameSystems;
 using Whatever.GameSystems.Combat;
 using Whatever.GameSystems.Stat;
 using Whatever.ObjectControl;
@@ -28,6 +29,13 @@ namespace Whatever.UI
         public override void Hide()
         {
             gameObject.SetActive(false);
+        }
+
+        public void InitPlayerObserver(PlayerCharacterObserver observer)
+        {
+            //observer.CharacterChanged +=  
+            observer.StatsChanged += RefreshStats;
+            observer.SkillCooldownChanged += RefreshSkillSlots;
         }
 
         public void SetupQuickSlot(QuickSlotLoadout loadout, SkillBook book)

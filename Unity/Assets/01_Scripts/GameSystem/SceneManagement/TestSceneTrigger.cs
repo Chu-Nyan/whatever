@@ -5,8 +5,8 @@ using UnityEngine;
 using Whatever.Entities.Characters;
 using Whatever.Entities.Items;
 using Whatever.Entities.Skill;
+using Whatever.Facade;
 using Whatever.GameSystems;
-using Whatever.GameSystems.Stat;
 using Whatever.ObjectControl;
 using Whatever.UI;
 
@@ -19,6 +19,9 @@ namespace Whatever.Core
         private EngineSetting _engineSetting;
         private ObjectController _controller;
         private PersistentDataContainer _persistentContainer;
+        private PlayerCharacterObserver _characterObserver;
+
+        private PlayerFacade _playerFacade;
 
         private void Awake()
         {
@@ -47,6 +50,7 @@ namespace Whatever.Core
         {
             _controller = transform.AddComponent<ObjectController>();
             _persistentContainer = new();
+            _characterObserver = transform.AddComponent<PlayerCharacterObserver>();
         }
 
         private void InitStatic()
@@ -62,21 +66,27 @@ namespace Whatever.Core
             inven.TryAdd(ItemFactory.Instance.Create(3, 1));
             inven.TryAdd(ItemFactory.Instance.Create(4, 1));
 
+            var loadout = new QuickSlotLoadout();
+            loadout.CopySkillSlot(new int[] { 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0 });
+            loadout.CopyItemSlot(new int[] { 1, 2 });
+
             _persistentContainer.SaveInventory("player", inven);
+            _persistentContainer.SaveQuickSlot("player", loadout);
         }
 
         private void CreateFacade()
         {
+            _playerFacade = new(CharacterFactory.Instance, _controller, UIManager.Instance.GetUI<HudUI>(), _persistentContainer, _characterObserver);
         }
 
         private void InitFacade()
         {
+            _playerFacade.InitObserverCallbacks();
         }
 
         private void GameStart()
         {
-            CreatePlayer();
-
+            _playerFacade.CreateCharacter(1, Vector3.zero);
 
             //var Stats = new Stats();
             //Stats.SetupBase(DataBase.Instance.CharacterRepo.DefinitionData[2].Stats);
@@ -92,14 +102,6 @@ namespace Whatever.Core
             //Stats.ApplyModifier(midifier);
 
         }
-
-        private void CreatePlayer()
-        {
-            var actor = CharacterFactory.Instance.CreateCharacter(1, Vector3.zero, "player");
-            _controller.ConnectPlayerAgent(actor);
-            actor.Data.StatIns.AddResource(ResourceType.Health, -10);
-            actor.Data.StatIns.AddResource(ResourceType.Mana, -10);
-            actor.Data.StatIns.AddResource(ResourceType.Stamina, -10);
-        }
     }
+
 }

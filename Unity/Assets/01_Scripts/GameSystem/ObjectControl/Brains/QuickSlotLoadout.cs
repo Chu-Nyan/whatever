@@ -2,59 +2,42 @@ namespace Whatever.ObjectControl
 {
     public class QuickSlotLoadout
     {
-        public enum SkillSlot
+        public enum SlotType
         {
-            Basic, Support, Dodge, Ultimate, Slot1, Slot2, Slot3, Slot4, Slot5, Slot6, Slot7, Slot8
+            Basic, Support, Slot1, Slot2, Slot3, Slot4, Slot5, Slot6, Slot7, Slot8, Dodge, Ultimate, Q, E
         }
 
-        public enum ItemSlot
+        public const int SkillCount = 12;
+        public const int ItemCount = 2;
+
+        private readonly int[] _idByType;
+
+        public int this[SlotType slot]
         {
-            Q, E
+            get => _idByType[(int)slot];
         }
 
-        private readonly int[] _skillIDBySlot;
-        private readonly int[] _itemIDBySlot;
-
-        public int this[SkillSlot slot]
+        public int this[int slot]
         {
-            get => _skillIDBySlot[(int)slot];
-        }
-
-        public int this[ItemSlot slot]
-        {
-            get => _itemIDBySlot[(int)slot];
+            get => _idByType[slot];
         }
 
         public QuickSlotLoadout()
         {
-            _skillIDBySlot = new int[12];
-            _itemIDBySlot = new int[2];
+            _idByType = new int[SkillCount + ItemCount];
         }
 
-        public void CopySkillSlot(int[] skillSlot)
+        public void CopySlot(int[] skillSlot)
         {
             for (int i = 0; i < skillSlot.Length; i++)
             {
-                BindingSlot((SkillSlot)i, skillSlot[i]);
+                BindingSlot((SlotType)i, skillSlot[i]);
             }
         }
 
-        public void CopyItemSlot(int[] itemSlot)
+        public void BindingSlot(SlotType type, int skillID)
         {
-            for (int i = 0; i < itemSlot.Length; i++)
-            {
-                _itemIDBySlot[i] = itemSlot[i];
-            }
-        }
-
-        public void BindingSlot(SkillSlot type, int skillID)
-        {
-            _skillIDBySlot[(int)type] = skillID;
-        }
-
-        public void BindingSlot(ItemSlot type, int skillID)
-        {
-            _itemIDBySlot[(int)type] = skillID;
+            _idByType[(int)type] = skillID;
         }
     }
 }

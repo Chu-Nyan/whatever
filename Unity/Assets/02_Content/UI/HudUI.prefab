@@ -2011,9 +2011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9653d8aef08314aa037a8d1a7bcb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlots
-  _skillSlots:
-  - {fileID: 3272923916654020395}
-  - {fileID: 4344691988367676125}
+  _slots:
   - {fileID: 5776907681973992144}
   - {fileID: 7489602252825015020}
   - {fileID: 2244966525981954373}
@@ -2022,7 +2020,8 @@ MonoBehaviour:
   - {fileID: 954334903188301112}
   - {fileID: 6749070580509641469}
   - {fileID: 2595644357842305513}
-  _itemSlots:
+  - {fileID: 3272923916654020395}
+  - {fileID: 4344691988367676125}
   - {fileID: 5944067449577036493}
   - {fileID: 5953150986895482911}
 --- !u!1 &6592911915573346710

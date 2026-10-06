@@ -1,6 +1,7 @@
 using UnityEngine;
 using Whatever.Entities.Characters;
 using Whatever.GameSystems;
+using Whatever.GameSystems.Stat;
 using Whatever.ObjectControl;
 using Whatever.UI;
 
@@ -29,7 +30,7 @@ namespace Whatever.Facade
         public void InitObserverCallbacks()
         {
             _observer.SkillCooldownChanged += RefreshQuickSlotCooldown;
-            _hudUI.InitPlayerObserver(_observer);
+            _observer.StatsChanged += RefreshHudUIStats;
         }
 
         public void CreateCharacter(int id, Vector3 position)
@@ -47,6 +48,13 @@ namespace Whatever.Facade
             _controller.ConnectPlayerAgent(character, _quickslot);
             _observer.SetCharacter(character);
             SetupHudUI(character);
+        }
+
+        private void RefreshHudUIStats(Stats stat)
+        {
+            _hudUI.Stats.SetHP(stat[ResourceType.Health] / stat[StatType.Health]);
+            _hudUI.Stats.SetMP(stat[ResourceType.Mana] / stat[StatType.Mana]);
+            _hudUI.Stats.SetStamina(stat[ResourceType.Stamina] / stat[StatType.Stamina]);
         }
 
         private void SetupHudUI(Character player)

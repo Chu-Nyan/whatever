@@ -2,7 +2,6 @@ using Chunity.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using Whatever.GameSystems;
-using Whatever.GameSystems.Combat;
 using Whatever.GameSystems.Stat;
 using Whatever.ObjectControl;
 
@@ -15,10 +14,12 @@ namespace Whatever.UI
         [SerializeField]
         private QuickSlotUIContent _quickSlot;
         private Dictionary<int, int> _quickslotBySkillID;
+        private Dictionary<int, int> _quickslotByItemID;
 
         public HudUI()
         {
             _quickslotBySkillID = new(10);
+            _quickslotByItemID = new(2);
         }
 
         public override void Show()
@@ -62,6 +63,25 @@ namespace Whatever.UI
                     _quickslotBySkillID[skillID] = i;
                 }
             }
+
+            var inven = offense.Inventory;
+            for (int i = 0; i < 2; i++)
+            {
+                var itemID = loadout[(QuickSlotLoadout.ItemSlot)i];
+                if (itemID == 0)
+                {
+                    _quickSlot.SetupEmptyItem(i);
+                }
+                else if (inven.TryGetItem(itemID, out var item) == false)
+                {
+                    _quickSlot.SetupFalseItem(i);
+                }
+                else
+                {
+                    _quickSlot.SetupItemSlot(i, null, cooldownSys.GetRemainTime(CooldownSystem.Category.Item, itemID));
+                    _quickslotByItemID[itemID] = i;
+                }
+            }
         }
 
         public void RefreshStats(Stats stat)
@@ -80,6 +100,17 @@ namespace Whatever.UI
 
                 float remain = sys.GetRemainTime(CooldownSystem.Category.Skill, item.Key);
                 _quickSlot.RefreshSkillCooldown(item.Value, remain);
+
+
+            }
+
+            foreach (var item in _quickslotByItemID)
+            {
+                if (sys.ContainItems(item.Key) == false)
+                    continue;
+
+                float remain = sys.GetRemainTime(CooldownSystem.Category.Item, item.Key);
+                _quickSlot.RefreshItemCooldown(item.Value, remain);
             }
         }
     }

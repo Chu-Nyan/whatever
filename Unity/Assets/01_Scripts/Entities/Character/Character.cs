@@ -34,6 +34,7 @@ namespace Whatever.Entities.Characters
         public CombatSystem CombatSystem => _combatSystem;
         public CooldownSystem CooldownSys => _cooldownSys;
         public SkillBook SkillBook => _skillBook;
+        public Inventory Inventory => _inventory;
 
 
         private void Awake()
@@ -187,13 +188,22 @@ namespace Whatever.Entities.Characters
         public void UseItem(int itemID)
         {
             if (_inventory.TryGetItem(itemID, out var item) == false)
+            {
+                Debug.Log("No item" + " Item ID : " + itemID);
                 return;
+            }
             if (item.CanUse() == false)
                 return;
+            if (_cooldownSys.ContainItems(itemID) == true)
+            {
+                Debug.Log("Cooldown remained" + " Item ID : " + itemID);
+                return;
+            }
 
             item.Use();
             // TODO : 아이템 효과 적용
             Debug.Log($"{itemID} Used");
+            _cooldownSys.Set(CooldownSystem.Category.Item, itemID, ((Consumable)item).ConsumableDef.Cooldown);
         }
 
         public void SetActive(bool value)

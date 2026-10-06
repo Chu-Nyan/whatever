@@ -23,6 +23,11 @@ namespace Whatever.GameSystems
             return _cooldowns.ContainsKey((int)Category.Skill + id);
         }
 
+        public bool ContainItems(int id)
+        {
+            return _cooldowns.ContainsKey((int)Category.Item + id);
+        }
+
         public float GetRemainTime(Category category, int id)
         {
             if (_cooldowns.TryGetValue(CooldownID(category, id), out float endTime) == false)

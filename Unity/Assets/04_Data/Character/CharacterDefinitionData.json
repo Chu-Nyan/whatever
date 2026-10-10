@@ -4,13 +4,27 @@
     "NameKey": "character.player.name",
     "DescKey": "character.player.desc",
     "Faction": 0,
-    "SkillSetID": 0
+    "SkillSetID": 1
   },
   {
     "ID": 2,
     "NameKey": "character.rabbit.name",
     "DescKey": "character.rabbit.desc",
+    "Faction": 2,
+    "SkillSetID": 2
+  },
+  {
+    "ID": 3,
+    "NameKey": "character.deer.name",
+    "DescKey": "character.deer.desc",
+    "Faction": 2,
+    "SkillSetID": 2
+  },
+  {
+    "ID": 4,
+    "NameKey": "character.soldier.name",
+    "DescKey": "character.soldier.desc",
     "Faction": 1,
-    "SkillSetID": 1
+    "SkillSetID": 2
   }
 ]

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Chunity.DataPipeline.DataTableConverter
   GoogleLoader:
     GoogleSheetID: 1ojmQBCvXK5TKlW2udlV2d20fCiHIF0YDpcipESKKokc
-    LastSync: "2026-09-18 \uC624\uC804 1:21:01"
+    LastSync: "2026-10-11 \uC624\uC804 4:02:11"
     Export: {fileID: 102900000, guid: f6d90e5d02d8aca4da1133b52bbaf240, type: 3}
   Config:
     _nameRow: 1

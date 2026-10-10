@@ -16,8 +16,8 @@ MonoBehaviour:
     _factions:
     - key: 0
       value:
-        _factionRelations: ffffffff01000000ffffffffi
-        _hostilityMask: 5
+        _factionRelations: 0000000001000000ffffffffi
+        _hostilityMask: 4
     - key: 1
       value:
         _factionRelations: 0100000001000000ffffffffi

@@ -13,6 +13,8 @@ namespace Whatever.GameSystems.Stat
 
         private readonly Resource[] _resources;
 
+        public event Action<float> HpChanged;
+
         public float this[StatType type]
         {
             get => _bases[(int)type];
@@ -66,6 +68,7 @@ namespace Whatever.GameSystems.Stat
             {
                 case ResourceType.Health:
                     _resources[(int)type].Add(value, _current[(int)StatType.Health]);
+                    HpChanged?.Invoke(_resources[(int)type].Value);
                     break;
                 case ResourceType.Mana:
                     _resources[(int)type].Add(value, _current[(int)StatType.Mana]);

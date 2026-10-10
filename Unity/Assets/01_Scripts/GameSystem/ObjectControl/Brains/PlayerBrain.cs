@@ -85,26 +85,37 @@ namespace Whatever.ObjectControl
 
         private void UseBasicSkill()
         {
-            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SlotType.Basic], InputSystem.Instance.Always.MousePosition);
+            if (TryConvertScreenToGroundPosition(out var result) == false)
+                return;
+
+            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SlotType.Basic], result);
         }
 
         private void UseSupportSkill()
         {
-            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SlotType.Support], InputSystem.Instance.Always.MousePosition);
+            if (TryConvertScreenToGroundPosition(out var result) == false)
+                return;
+
+            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SlotType.Support], result);
         }
 
         private void UseUltimate()
         {
-            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SlotType.Ultimate], InputSystem.Instance.Always.MousePosition);
+            if (TryConvertScreenToGroundPosition(out var result) == false)
+                return;
+
+            _offenseReceiver.UseSkill(_quickSlot[QuickSlotLoadout.SlotType.Ultimate], result);
         }
 
         private void UseSkillSlot(int skillSlot)
         {
+            if (TryConvertScreenToGroundPosition(out var result) == false)
+                return;
+
             if (_isSkillSwap == true)
                 skillSlot += 4;
-
             var skillID = _quickSlot[QuickSlotLoadout.SlotType.Slot1 + skillSlot];
-            _offenseReceiver.UseSkill(skillID, InputSystem.Instance.Always.MousePosition);
+            _offenseReceiver.UseSkill(skillID, result);
         }
 
         private void UseItem(int itemSlot)
@@ -123,6 +134,22 @@ namespace Whatever.ObjectControl
         private void ToggleSprint(bool value)
         {
             _movementReceiver.ToggleSprint(value);
+        }
+
+        private bool TryConvertScreenToGroundPosition(out Vector3 result)
+        {
+            var mousePoint = InputSystem.Instance.Always.MousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(mousePoint);
+            int flag = LayerMask.GetMask("Ground");
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, flag) == true)
+            {
+                result = hit.point;
+                return true;
+            }
+
+            result = default;
+            return false;
         }
 
     }

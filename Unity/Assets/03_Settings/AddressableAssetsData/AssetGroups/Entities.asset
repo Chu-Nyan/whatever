@@ -25,6 +25,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bca2a66fad3f7ed459c9584eb64ad869
+    m_Address: VCamFollow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f93dc76a3f8d33d4c9d51c0df834ab45
+    m_Address: VCamStatic
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a59f34be22df22049a009e05cacd8468, type: 2}
   m_SchemaSet:

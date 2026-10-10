@@ -1,3 +1,4 @@
+using Chunity.Framework;
 using UnityEngine;
 using Whatever.Entities.Characters;
 using Whatever.GameSystems;
@@ -14,18 +15,19 @@ namespace Whatever.Facade
         private readonly PersistentDataContainer _persistentContainer;
         private readonly HudUI _hudUI;
         private readonly PlayerCharacterObserver _observer;
+        private readonly VCamFollow _mainCam;
 
         private Character _player;
         private QuickSlotLoadout _quickslot;
 
-        public PlayerFacade(CharacterFactory factory, ObjectController controller, HudUI hudUI, PersistentDataContainer persistentContainer, PlayerCharacterObserver observer)
+        public PlayerFacade(CharacterFactory factory, ObjectController controller, HudUI hudUI, PersistentDataContainer persistentContainer, PlayerCharacterObserver observer, VCamFollow mainCam)
         {
             _factory = factory;
             _controller = controller;
             _hudUI = hudUI;
             _persistentContainer = persistentContainer;
             _observer = observer;
-
+            _mainCam = mainCam;
             _hudUI.SetupBtn(OpenInventory, OpenSkillBook, OpenSetting);
         }
 
@@ -42,6 +44,11 @@ namespace Whatever.Facade
             player.SkillBook.AddSkill(2);
             BindPlayer(player);
             _player = player;
+        }
+
+        public void FollowCamera()
+        {
+            _mainCam.SetThirdPersonTarget(_player.transform);
         }
 
         public void BindPlayer(Character character)

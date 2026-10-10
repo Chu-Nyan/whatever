@@ -35,6 +35,8 @@ namespace Chunity.Core
             new InputSystem();
             InputSystem.Instance.SetActive(true);
 
+            new CameraFactory();
+
             if (setting.UseCollision == true)
                 _collisionSys = RunCollisionSystem(setting.CollisionBound, setting.Capacity);
         }

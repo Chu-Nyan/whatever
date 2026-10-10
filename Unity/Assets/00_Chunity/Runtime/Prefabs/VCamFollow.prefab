@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 3298131653223002591}
   - component: {fileID: 3298445161108689452}
   - component: {fileID: 7905305508731602905}
+  - component: {fileID: 5852685137255595029}
   - component: {fileID: 4087306082730462806}
   m_Layer: 0
   m_Name: VCamFollow
@@ -128,6 +129,19 @@ MonoBehaviour:
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   FollowOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &5852685137255595029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014918137390396836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineHardLookAt
+  LookAtOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &4087306082730462806
 MonoBehaviour:
   m_ObjectHideFlags: 0

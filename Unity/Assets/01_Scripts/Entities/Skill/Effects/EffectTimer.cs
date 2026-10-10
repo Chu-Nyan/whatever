@@ -1,4 +1,5 @@
 using UnityEngine;
+using Whatever.GameSystems.Stat;
 
 namespace Whatever.Entities.Skill
 {
@@ -20,7 +21,7 @@ namespace Whatever.Entities.Skill
             _isDone = false;
         }
 
-        public void Tick(ISkillTarget stats)
+        public void Tick(Stats stats)
         {
             _remainTime -= Time.deltaTime;
 

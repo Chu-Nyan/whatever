@@ -1,4 +1,5 @@
 using UnityEngine;
+using Whatever.GameSystems.Stat;
 
 namespace Whatever.Entities.Skill
 {
@@ -24,7 +25,7 @@ namespace Whatever.Entities.Skill
             _remainTick = Mathf.CeilToInt(_data.Duration / EffectDotData.DamageInterval);
         }
 
-        public void Tick(ISkillTarget defensive)
+        public void Tick(Stats stats)
         {
             _remainInterval -= Time.deltaTime;
             if (_remainInterval <= 0)

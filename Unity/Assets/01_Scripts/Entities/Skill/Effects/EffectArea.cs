@@ -1,3 +1,5 @@
+using Whatever.GameSystems.Stat;
+
 namespace Whatever.Entities.Skill
 {
     public class EffectArea : ISkillEffect
@@ -18,7 +20,7 @@ namespace Whatever.Entities.Skill
 
         }
 
-        public void Tick(ISkillTarget defensive)
+        public void Tick(Stats stats)
         {
             // TODO : 범위 스킬 로직
             _isDone = true;

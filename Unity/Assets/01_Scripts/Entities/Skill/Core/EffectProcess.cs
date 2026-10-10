@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Whatever.GameSystems.Stat;
 
 namespace Whatever.Entities.Skill
 {
@@ -30,7 +31,7 @@ namespace Whatever.Entities.Skill
             _isDone = false;
         }
 
-        public bool TickAndCheck(ISkillTarget stats)
+        public bool TickAndCheck(Stats stats)
         {
             if (_isDone == true)
             {

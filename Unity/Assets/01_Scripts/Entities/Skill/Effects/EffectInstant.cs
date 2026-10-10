@@ -1,3 +1,6 @@
+using UnityEngine;
+using Whatever.GameSystems.Stat;
+
 namespace Whatever.Entities.Skill
 {
     public class EffectInstant : ISkillEffect
@@ -17,9 +20,10 @@ namespace Whatever.Entities.Skill
             _context = context;
         }
 
-        public void Tick(ISkillTarget stats)
+        public void Tick(Stats stats)
         {
-            // TODO : 처리
+            stats.AddResource(ResourceType.Health, -(_context.Damage * _data.DamageRate));
+            Debug.Log(stats[ResourceType.Health]);
             _isDone = true;
         }
     }

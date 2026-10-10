@@ -11,6 +11,8 @@ namespace Whatever.Entities.Skill
 {
     public class SkillFactory : Singleton<SkillFactory>
     {
+        private static readonly NyanLayerMask _mask = new(NyanLayer.Character);
+
         private readonly Transform _root;
         private readonly ObjectPooling<Projectile> _objectPool;
 
@@ -48,8 +50,7 @@ namespace Whatever.Entities.Skill
 
             var skillData = DataBase.Instance.SkillRepo.Skills[skillID];
             var targetFaction = DataBase.Instance.WorldProfile.FactionTable[faction].HostilityMask;
-            var mask = new NyanLayerMask();
-            obj.Setup(instigatorID, skillData, dmg, targetFaction, mask);
+            obj.Setup(instigatorID, skillData, dmg, targetFaction, _mask);
             obj.SetTarget(start, dir);
             obj.SetActive(true);
             return obj;

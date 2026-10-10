@@ -21,10 +21,9 @@ namespace Whatever.Entities.Skill
 
         public event Action<Projectile> Destroyed;
 
-        public NyanCollider Collider
-        {
-            get => _nyanCollider;
-        }
+        public NyanCollider Collider => _nyanCollider;
+        public ProjectileData ProjectileData => _data;
+        public int LogicStep => _logicStep;
 
         private void Awake()
         {
@@ -106,7 +105,7 @@ namespace Whatever.Entities.Skill
 
         public void OnNyanCollisionEnter(INyanCollisionProvider provider)
         {
-            Debug.Log("Hit");
+            SetActive(false);
         }
 
         public void OnNyanCollisionExit(INyanCollisionProvider collider)

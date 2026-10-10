@@ -31,7 +31,7 @@ namespace Whatever.Entities.Characters
 
             var data = DataBase.Instance.CharacterRepo.DefinitionData[id];
             var actor = _pool.Dequeue();
-            actor.RegisterDeactivated(_pool.Enqueue);
+            actor.Deactivated += Release;
             actor.SetPositionWithNavMash(pos);
             actor.Setup(data, inven);
             var skillSet = DataBase.Instance.SkillRepo.SkillSet[data.SkillSetID];
@@ -51,6 +51,11 @@ namespace Whatever.Entities.Characters
         public Character CreateCharacter(int id, Vector3 pos)
         {
             return CreateCharacter(id, pos, "Empty");
+        }
+
+        private void Release(Character character)
+        {
+            _pool.Enqueue(character);
         }
     }
 }

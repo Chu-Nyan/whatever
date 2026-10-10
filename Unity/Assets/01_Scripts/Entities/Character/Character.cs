@@ -1,4 +1,5 @@
 using Chunity.Core;
+using Chunity.GameSystem.Physics;
 using Chunity.Utility;
 using System;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Whatever.Entities.Characters
 {
     public class Character : MonoBehaviour, ISceneObject, IMovementReceiver, IOffenseReceiver
     {
+        public static readonly NyanLayerMask BodyMask = new(NyanLayer.Projectile);
+
         private int _instanceID;
 
         [SerializeField]
@@ -26,7 +29,7 @@ namespace Whatever.Entities.Characters
         private SkillBook _skillBook;
         private Inventory _inventory;
 
-        private event Action<Character> Deactivated;
+        public event Action<Character> Deactivated;
 
         public int InstanceID => _instanceID;
         public int ReceiverID => _instanceID;
@@ -35,7 +38,6 @@ namespace Whatever.Entities.Characters
         public CooldownSystem CooldownSys => _cooldownSys;
         public SkillBook SkillBook => _skillBook;
         public Inventory Inventory => _inventory;
-
 
         private void Awake()
         {
@@ -47,15 +49,17 @@ namespace Whatever.Entities.Characters
             _stateContext = new();
             _state = new(_stateContext);
             _cooldownSys = new();
-            _combatSystem = new(_instanceID);
-
+            _combatSystem = new(_instanceID, BodyMask);
             _data = new();
             _skillBook = new();
+
+            _data.StatIns.HpChanged += (a) => { if (a <= 0) SetActive(false); };
         }
 
         private void Update()
         {
             _cooldownSys.Tick();
+            _combatSystem.Tick(_data.StatIns);
             CheckExternalConditions();
             _state.Update(_stateContext);
             ExcuteMovementOrder();
@@ -101,6 +105,8 @@ namespace Whatever.Entities.Characters
         {
             _data.Setup(def);
             _inventory = inven;
+            // TODO : 캐릭터 정보로 바디 충돌체 범위 지정
+            _combatSystem.SetBodyShape(new CircleShape());
         }
 
         private void Move(MovementOrder movementOrder)
@@ -115,6 +121,7 @@ namespace Whatever.Entities.Characters
             {
                 movementOrder.EndOrder();
             }
+            UpdateCollider();
         }
 
         private void Dodge(ActionOrder actionOrder)
@@ -146,6 +153,8 @@ namespace Whatever.Entities.Characters
             {
                 _nav.Warp(hit.position);
             }
+
+            UpdateCollider();
         }
 
         public void ToggleSprint(bool value)
@@ -180,7 +189,8 @@ namespace Whatever.Entities.Characters
                 return;
             }
 
-            bool result = _combatSystem.FireSkill(skillID, transform.position, targetPoint);
+            Vector3 direction = (targetPoint - transform.position).normalized;
+            bool result = _combatSystem.FireSkill(skillID, transform.position, direction);
             _cooldownSys.Set(CooldownSystem.Category.Skill, skillID, _skillBook[skillID].Data.Cooldown);
             Debug.Log(result + " Skill ID : " + skillID);
         }
@@ -221,9 +231,9 @@ namespace Whatever.Entities.Characters
             gameObject.SetActive(value);
         }
 
-        public void RegisterDeactivated(Action<Character> callback)
+        private void UpdateCollider()
         {
-            Deactivated += callback;
+            _combatSystem.Collider.SetTransform(transform.position.ToVector2XZ(), transform.eulerAngles.y);
         }
     }
 }

@@ -74,3 +74,6 @@
 # Temporary auto-generated Android Assets
 /Unity/[Aa]ssets/[Ss]treamingAssets/aa.meta
 /Unity/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# User Temporary
+/Unity/[Aa]ssets/00_Chunity/Runtime/Settings/Caches/

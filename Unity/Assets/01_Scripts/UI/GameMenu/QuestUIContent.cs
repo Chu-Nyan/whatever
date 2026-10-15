@@ -5,7 +5,7 @@ namespace Whatever.UI
 {
     public class QuestUIContent : MainMenuUIContent
     {
-        private static readonly string[] _subMenuNameKeys = new string[] { "" };
+        private static readonly string[] _subMenuNameKeys = new string[] { };
         [SerializeField]
         private InfiniteVerticalScroll _questList;
         private TextButtonView[] _slots;

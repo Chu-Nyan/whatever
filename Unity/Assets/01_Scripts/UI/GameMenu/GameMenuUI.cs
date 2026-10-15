@@ -8,7 +8,7 @@ namespace Whatever.UI
 {
     public class GameMenuUI : UIController
     {
-        public enum MenuType { Equipment, Inventory, Skills, Setting }
+        public enum MenuType { Equipment, Inventory, Skills, Quest, Setting }
 
         [SerializeField]
         private Button[] _mainMenuBtns;
@@ -21,6 +21,8 @@ namespace Whatever.UI
 
         [SerializeField]
         private EquipmentUIContent _equipmentUI;
+        [SerializeField]
+        private QuestUIContent _questUI;
 
         private MainMenuUIContent _currentMenu;
         private Character _target;
@@ -29,6 +31,7 @@ namespace Whatever.UI
         {
             _exit.onClick.AddListener(() => Hide());
             _mainMenuBtns[0].onClick.AddListener(() => ShowEquipment());
+            _mainMenuBtns[(int)MenuType.Quest].onClick.AddListener(() => ShowQuest());
             for (int i = 0; i < _subMenuBtns.Length; i++)
             {
                 int index = i;
@@ -36,11 +39,17 @@ namespace Whatever.UI
             }
 
             _equipmentUI.Init();
+            _questUI.Init();
         }
 
         public void SetTargetCharacter(Character target)
         {
             _target = target;
+        }
+
+        public void SetQuestBook(int book)
+        {
+            _questUI.SetQuestBook(book);
         }
 
         public override void Show()
@@ -59,12 +68,17 @@ namespace Whatever.UI
             _equipmentUI.Refresh(_target);
         }
 
+        public void ShowQuest()
+        {
+            ShowMainMenu(_questUI);
+        }
+
         private void ShowMainMenu(MainMenuUIContent menu)
         {
             if (_currentMenu == menu)
                 return;
-
-            //_currentMenu.gameObject.SetActive(false);
+            if (_currentMenu != null)
+                _currentMenu.gameObject.SetActive(false);
             RefreshMenu(menu.TitleKey, menu.SubMenuNameKeys);
             menu.SetActive(true);
             _currentMenu = menu;

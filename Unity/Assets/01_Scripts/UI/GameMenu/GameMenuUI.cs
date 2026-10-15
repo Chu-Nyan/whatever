@@ -19,6 +19,9 @@ namespace Whatever.UI
         [SerializeField]
         private Button _exit;
 
+        [SerializeField]
+        private EquipmentUIContent _equipmentUI;
+
         private MainMenuUIContent _currentMenu;
         private Character _target;
 
@@ -32,6 +35,7 @@ namespace Whatever.UI
                 _subMenuBtns[i].Button.onClick.AddListener(() => _currentMenu.ShowSubMenu(index));
             }
 
+            _equipmentUI.Init();
         }
 
         public void SetTargetCharacter(Character target)
@@ -47,6 +51,12 @@ namespace Whatever.UI
         public override void Hide()
         {
             gameObject.SetActive(false);
+        }
+
+        public void ShowEquipment()
+        {
+            ShowMainMenu(_equipmentUI);
+            _equipmentUI.Refresh(_target);
         }
 
         private void ShowMainMenu(MainMenuUIContent menu)

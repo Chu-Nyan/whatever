@@ -23,23 +23,30 @@ namespace Whatever.UI
         private EquipmentUIContent _equipmentUI;
         [SerializeField]
         private QuestUIContent _questUI;
+        [SerializeField]
+        private SettingUIContent _settingUI;
 
         private MainMenuUIContent _currentMenu;
         private Character _target;
 
         private void Awake()
         {
-            _exit.onClick.AddListener(() => Hide());
-            _mainMenuBtns[0].onClick.AddListener(() => ShowEquipment());
+            _mainMenuBtns[(int)MenuType.Equipment].onClick.AddListener(() => ShowEquipment());
             _mainMenuBtns[(int)MenuType.Quest].onClick.AddListener(() => ShowQuest());
+            _mainMenuBtns[(int)MenuType.Setting].onClick.AddListener(() => ShowSetting());
+
             for (int i = 0; i < _subMenuBtns.Length; i++)
             {
                 int index = i;
                 _subMenuBtns[i].Button.onClick.AddListener(() => _currentMenu.ShowSubMenu(index));
             }
+            _exit.onClick.AddListener(() => Hide());
 
             _equipmentUI.Init();
             _questUI.Init();
+
+            _currentMenu = _questUI;
+            ShowSetting();
         }
 
         public void SetTargetCharacter(Character target)
@@ -73,12 +80,17 @@ namespace Whatever.UI
             ShowMainMenu(_questUI);
         }
 
+        public void ShowSetting()
+        {
+            ShowMainMenu(_settingUI);
+        }
+
         private void ShowMainMenu(MainMenuUIContent menu)
         {
             if (_currentMenu == menu)
                 return;
-            if (_currentMenu != null)
-                _currentMenu.gameObject.SetActive(false);
+
+            _currentMenu.gameObject.SetActive(false);
             RefreshMenu(menu.TitleKey, menu.SubMenuNameKeys);
             menu.SetActive(true);
             _currentMenu = menu;

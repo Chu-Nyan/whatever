@@ -22,6 +22,8 @@ namespace Whatever.UI
         [SerializeField]
         private EquipmentUIContent _equipmentUI;
         [SerializeField]
+        private InventoryUIContent _inventoryContent;
+        [SerializeField]
         private QuestUIContent _questUI;
         [SerializeField]
         private SettingUIContent _settingUI;
@@ -32,6 +34,7 @@ namespace Whatever.UI
         private void Awake()
         {
             _mainMenuBtns[(int)MenuType.Equipment].onClick.AddListener(() => ShowEquipment());
+            _mainMenuBtns[(int)MenuType.Inventory].onClick.AddListener(() => ShowInventory());
             _mainMenuBtns[(int)MenuType.Quest].onClick.AddListener(() => ShowQuest());
             _mainMenuBtns[(int)MenuType.Setting].onClick.AddListener(() => ShowSetting());
 
@@ -44,6 +47,7 @@ namespace Whatever.UI
 
             _equipmentUI.Init();
             _questUI.Init();
+            _inventoryContent.Init();
 
             _currentMenu = _questUI;
             ShowSetting();
@@ -72,6 +76,12 @@ namespace Whatever.UI
         public void ShowEquipment()
         {
             ShowMainMenu(_equipmentUI);
+            _equipmentUI.Refresh(_target);
+        }
+
+        public void ShowInventory()
+        {
+            ShowMainMenu(_inventoryContent);
             _equipmentUI.Refresh(_target);
         }
 

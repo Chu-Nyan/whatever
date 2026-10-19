@@ -99,7 +99,7 @@ namespace Whatever.Facade
                 var id = _quickslot[i + 2];
                 if (id == 0)
                     _hudUI.QuickSlot.SetupEmpty(i);
-                else if (player.Inventory.TryGetItem(id, out var item) == false)
+                else if (player.Inventory.QuickSlot.TryGetItem(id, out var item) == false)
                     _hudUI.QuickSlot.SetupFalse(i);
                 else
                     _hudUI.QuickSlot.SetupSlot(i, null, player.CooldownSys.GetRemainTime(CooldownSystem.Category.Item, id));

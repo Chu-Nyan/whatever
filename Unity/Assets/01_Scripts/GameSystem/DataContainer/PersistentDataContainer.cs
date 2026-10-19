@@ -7,28 +7,35 @@ namespace Whatever.GameSystems
 {
     public class PersistentDataContainer
     {
-        private readonly Dictionary<string, Inventory> _inventoryByKey;
+        private readonly Dictionary<string, CategoryInventory> _categoryInvenByKey;
+        private readonly Dictionary<string, QuickSlotInventory> _quickSlotInvenByKey;
         private readonly Dictionary<string, QuickSlotLoadout> _quickSlotByKey;
 
         public PersistentDataContainer()
         {
-            _inventoryByKey = new();
+            _categoryInvenByKey = new();
+            _quickSlotInvenByKey = new();
             _quickSlotByKey = new();
         }
 
-        public void SaveInventory(string key, Inventory inven)
+        public void SaveCategoryInventory(string key, CategoryInventory inven)
         {
-            _inventoryByKey[key] = inven;
+            _categoryInvenByKey[key] = inven;
         }
 
-        public void SaveQuickSlot(string key, QuickSlotLoadout loadout)
+        public void SaveQuickSlotInventory(string key, QuickSlotInventory inven)
+        {
+            _quickSlotInvenByKey[key] = inven;
+        }
+
+        public void SaveQuickSlotLoadout(string key, QuickSlotLoadout loadout)
         {
             _quickSlotByKey[key] = loadout;
         }
 
-        public bool TryGetInventory(string key, out Inventory inven)
+        public bool TryGetQuickSlotInventory(string key, out QuickSlotInventory inven)
         {
-            if (_inventoryByKey.TryGetValue(key, out inven) == false)
+            if (_quickSlotInvenByKey.TryGetValue(key, out inven) == false)
             {
                 Debug.Log($"Key is null.\nKey : {key}");
                 return false;

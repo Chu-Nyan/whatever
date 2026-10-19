@@ -27,7 +27,7 @@ namespace Whatever.Entities.Characters
 
         private CharacterData _data;
         private SkillBook _skillBook;
-        private Inventory _inventory;
+        private QuickSlotInventory _inventory;
 
         public event Action<Character> Deactivated;
 
@@ -37,7 +37,7 @@ namespace Whatever.Entities.Characters
         public CombatSystem CombatSystem => _combatSystem;
         public CooldownSystem CooldownSys => _cooldownSys;
         public SkillBook SkillBook => _skillBook;
-        public Inventory Inventory => _inventory;
+        public QuickSlotInventory Inventory => _inventory;
 
         private void Awake()
         {
@@ -101,7 +101,7 @@ namespace Whatever.Entities.Characters
             }
         }
 
-        public void Setup(CharacterDefinitionData def, Inventory inven)
+        public void Setup(CharacterDefinitionData def, QuickSlotInventory inven)
         {
             _data.Setup(def);
             _inventory = inven;
@@ -197,7 +197,7 @@ namespace Whatever.Entities.Characters
 
         public void UseItem(int itemID)
         {
-            if (_inventory.TryGetItem(itemID, out var item) == false)
+            if (_inventory.QuickSlot.TryGetItem(itemID, out var item) == false)
             {
                 Debug.Log("No item" + " Item ID : " + itemID);
                 return;

@@ -2,9 +2,41 @@ using System.Collections.Generic;
 
 namespace Whatever.Entities.Items
 {
+    public class CategoryInventory
+    {
+        public const int CategoryCapacity = 4;
+        private readonly Inventory[] _inventories;
+
+        public Inventory this[ItemCategory category] => _inventories[(int)category];
+
+        public CategoryInventory(int capacity)
+        {
+            _inventories = new Inventory[CategoryCapacity];
+            for (int i = 0; i < _inventories.Length; i++)
+            {
+                _inventories[i] = new(capacity);
+            }
+        }
+    }
+
+    public class QuickSlotInventory
+    {
+        public static readonly QuickSlotInventory Empty = new(0, 0);
+
+        public readonly Inventory QuickSlot;
+        public readonly Inventory Inventory;
+
+        public int Count => QuickSlot.Count + Inventory.Count;
+
+        public QuickSlotInventory(int QuickSlotCapacity, int inventoryCapacity)
+        {
+            QuickSlot = new(QuickSlotCapacity);
+            Inventory = new(inventoryCapacity);
+        }
+    }
+
     public class Inventory
     {
-        public static readonly Inventory Empty = new(0);
         public const int PlayerCapacity = 80;
 
         public readonly ItemBase[] List;

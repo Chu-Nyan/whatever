@@ -9,7 +9,7 @@ namespace Whatever.ObjectControl
     {
         public Transform transform { get; }
         public CombatSystem CombatSystem { get; }
-        public Inventory Inventory { get; }
+        public QuickSlotInventory Inventory { get; }
         public SkillBook SkillBook { get; }
         public CooldownSystem CooldownSys { get; }
         public void UseSkill(int skillID, Vector3 targetPoint);

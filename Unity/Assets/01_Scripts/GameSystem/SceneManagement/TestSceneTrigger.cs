@@ -62,17 +62,17 @@ namespace Whatever.Core
 
         private void InitInstance()
         {
-            var inven = new Inventory(80);
-            inven.TryAdd(ItemFactory.Instance.Create(1, 1));
-            inven.TryAdd(ItemFactory.Instance.Create(2, 1));
-            inven.TryAdd(ItemFactory.Instance.Create(3, 10));
-            inven.TryAdd(ItemFactory.Instance.Create(4, 10));
+            var inven = new QuickSlotInventory(2, 8);
+            inven.Inventory.TryAdd(ItemFactory.Instance.Create(1, 1));
+            inven.Inventory.TryAdd(ItemFactory.Instance.Create(2, 1));
+            inven.QuickSlot.TryAdd(ItemFactory.Instance.Create(3, 10));
+            inven.QuickSlot.TryAdd(ItemFactory.Instance.Create(4, 10));
 
             var loadout = new QuickSlotLoadout();
             loadout.CopySlot(new int[] { 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4 });
 
-            _persistentContainer.SaveInventory("player", inven);
-            _persistentContainer.SaveQuickSlot("player", loadout);
+            _persistentContainer.SaveQuickSlotInventory("player", inven);
+            _persistentContainer.SaveQuickSlotLoadout("player", loadout);
         }
 
         private void CreateFacade()

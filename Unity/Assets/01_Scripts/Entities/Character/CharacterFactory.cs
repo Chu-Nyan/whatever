@@ -26,8 +26,8 @@ namespace Whatever.Entities.Characters
 
         public Character CreateCharacter(int id, Vector3 pos, string key = null)
         {
-            if (_persistentContainer.TryGetInventory(key, out var inven) == false)
-                inven = Inventory.Empty;
+            if (_persistentContainer.TryGetQuickSlotInventory(key, out var inven) == false)
+                inven = QuickSlotInventory.Empty;
 
             var data = DataBase.Instance.CharacterRepo.DefinitionData[id];
             var actor = _pool.Dequeue();

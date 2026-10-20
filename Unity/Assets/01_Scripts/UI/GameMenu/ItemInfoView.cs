@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Whatever.UI
 {
-    public class ItemInfoContent : MonoBehaviour
+    public class ItemInfoView : MonoBehaviour
     {
         public RawImage Image;
         public TMP_Text Name;

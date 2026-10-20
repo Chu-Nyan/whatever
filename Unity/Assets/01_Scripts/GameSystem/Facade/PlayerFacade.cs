@@ -1,6 +1,7 @@
 using Chunity.Framework;
 using UnityEngine;
 using Whatever.Entities.Characters;
+using Whatever.Entities.Items;
 using Whatever.GameSystems;
 using Whatever.GameSystems.Stat;
 using Whatever.ObjectControl;
@@ -14,20 +15,24 @@ namespace Whatever.Facade
         private readonly ObjectController _controller;
         private readonly PersistentDataContainer _persistentContainer;
         private readonly HudUI _hudUI;
+        private readonly GameMenuUI _gameMenuUI;
         private readonly PlayerCharacterObserver _observer;
         private readonly VCamFollow _mainCam;
 
         private Character _player;
+        private CategoryInventory _inven;
         private QuickSlotLoadout _quickslot;
 
-        public PlayerFacade(CharacterFactory factory, ObjectController controller, HudUI hudUI, PersistentDataContainer persistentContainer, PlayerCharacterObserver observer, VCamFollow mainCam)
+        public PlayerFacade(CharacterFactory factory, ObjectController controller, HudUI hudUI, GameMenuUI gameMenuUI, PersistentDataContainer persistentContainer, PlayerCharacterObserver observer, VCamFollow mainCam)
         {
             _factory = factory;
             _controller = controller;
             _hudUI = hudUI;
+            _gameMenuUI = gameMenuUI;
             _persistentContainer = persistentContainer;
             _observer = observer;
             _mainCam = mainCam;
+
             _hudUI.SetupBtn(OpenInventory, OpenSkillBook, OpenSetting);
         }
 
@@ -57,6 +62,7 @@ namespace Whatever.Facade
             _controller.ConnectPlayerAgent(character, _quickslot);
             _observer.SetCharacter(character);
             SetupHudUI(character);
+            _gameMenuUI.SetPlayerCharacter(character);
         }
 
         private void OpenInventory()

@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
-using UnityEngine.UI;
-using Whatever.Entities.Characters;
+using Whatever.Entities.Items;
 
 namespace Whatever.UI
 {
@@ -9,30 +7,66 @@ namespace Whatever.UI
     {
         private static readonly string[] _subMenuNameKeys = new string[] { "Inventory" };
 
-        public CarrierContent _carrier;
-        public BagContent[] _bags;
-        public ItemInfoContent _itemInfo;
         [SerializeField]
-        private Button _reloadBag;
+        private CarrierView _carrierView;
         [SerializeField]
-        private Button _savePreset;
+        private BagPresetView _bagPresetView;
         [SerializeField]
-        private Button[] _presets;
+        private ItemInfoView _itemInfo;
+
+        private CategoryInventory _carrier;
+        private QuickSlotInventory[] _characterInven;
 
         public override string TitleKey => "Inventory";
         public override string[] SubMenuNameKeys => _subMenuNameKeys;
 
-        public event Action<int> PresetSlotClicked;
-        public event Action PresetReloaded;
-        public event Action PresetSaved;
-
         public void Init()
         {
-            _carrier.Init();
+            _carrierView.Init();
+            _characterInven = new QuickSlotInventory[3];
+            _carrierView.TapChanged += a => RefreshCarrier((CategoryInventory.Tap)a);
         }
 
-        public void Refresh(Character character)
+        public void SetCarrier(CategoryInventory inventory)
         {
+            _carrier = inventory;
+        }
+
+        public void SetCharacterInventory(int index, string name, QuickSlotInventory inven)
+        {
+            _characterInven[index] = inven;
+            _bagPresetView.Bags[index].Name.text = name;
+        }
+
+        public void RefreshCarrier(CategoryInventory.Tap tap)
+        {
+            if (_carrier == null)
+                return;
+
+            _carrierView.RefreshCarrier(_carrier[tap].List);
+        }
+
+        public void RefreshQuickSlot()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (_characterInven[i] == null)
+                {
+                    _bagPresetView.Bags[i].gameObject.SetActive(false);
+                }
+                else
+                {
+                    _bagPresetView.Bags[i].gameObject.SetActive(true);
+                    var inven = _characterInven[i];
+                    _bagPresetView.Bags[i].RefreshBag(inven.QuickSlot.List, inven.Inventory.List);
+                }
+            }
+        }
+
+        public void Refresh()
+        {
+            RefreshCarrier((CategoryInventory.Tap)_carrierView.CurrentTap);
+            RefreshQuickSlot();
         }
 
         public override void SetActive(bool value)

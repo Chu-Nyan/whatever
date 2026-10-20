@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Whatever.Entities.Characters;
+using Whatever.Entities.Items;
 
 namespace Whatever.UI
 {
@@ -48,14 +49,24 @@ namespace Whatever.UI
             _equipmentUI.Init();
             _questUI.Init();
             _inventoryContent.Init();
-
             _currentMenu = _questUI;
             ShowSetting();
         }
 
-        public void SetTargetCharacter(Character target)
+        public void SetPlayerCharacter(Character target)
         {
             _target = target;
+            SetCharacterInventory(0, target.Data.Def.NameKey, target.Inventory);
+        }
+
+        public void SetPlayerCarrier(CategoryInventory inventory)
+        {
+            _inventoryContent.SetCarrier(inventory);
+        }
+
+        public void SetCharacterInventory(int order, string name, QuickSlotInventory inven)
+        {
+            _inventoryContent.SetCharacterInventory(order, name, inven);
         }
 
         public void SetQuestBook(int book)
@@ -82,7 +93,7 @@ namespace Whatever.UI
         public void ShowInventory()
         {
             ShowMainMenu(_inventoryContent);
-            _equipmentUI.Refresh(_target);
+            _inventoryContent.Refresh();
         }
 
         public void ShowQuest()

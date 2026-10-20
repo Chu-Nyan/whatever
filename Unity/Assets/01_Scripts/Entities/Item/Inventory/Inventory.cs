@@ -6,28 +6,29 @@ namespace Whatever.Entities.Items
     {
         public const int PlayerCapacity = 80;
 
-        public readonly ItemBase[] List;
+        private readonly ItemBase[] _list;
         private readonly Dictionary<ItemBase, int> _indexByItem;
         private int _count;
 
+        public ItemBase[] List => _list;
         public int Count => _count;
 
-        public ItemBase this[int slotIndex] => List[slotIndex];
+        public ItemBase this[int slotIndex] => _list[slotIndex];
 
         public Inventory(int capacity)
         {
-            List = new ItemBase[capacity];
+            _list = new ItemBase[capacity];
             _indexByItem = new(capacity);
         }
 
         public bool TryAdd(ItemBase item)
         {
-            for (int i = 0; i < List.Length; i++)
+            for (int i = 0; i < _list.Length; i++)
             {
-                if (List[i] != null)
+                if (_list[i] != null)
                     continue;
 
-                List[i] = item;
+                _list[i] = item;
                 _indexByItem.Add(item, i);
                 _count++;
                 return true;
@@ -38,14 +39,14 @@ namespace Whatever.Entities.Items
 
         public bool TryGetItem(int itemID, out ItemBase item)
         {
-            for (int i = List.Length - 1; i >= 0; i--)
+            for (int i = _list.Length - 1; i >= 0; i--)
             {
-                if (List[i] == null)
+                if (_list[i] == null)
                     continue;
-                if (List[i].Def.ID != itemID)
+                if (_list[i].Def.ID != itemID)
                     continue;
 
-                item = List[i];
+                item = _list[i];
                 return true;
             }
 
@@ -67,7 +68,7 @@ namespace Whatever.Entities.Items
                 return;
 
             int index = _indexByItem[item];
-            List[index] = null;
+            _list[index] = null;
             _indexByItem.Remove(item);
             _count--;
         }

@@ -2,10 +2,13 @@ namespace Whatever.Entities.Items
 {
     public class CategoryInventory
     {
+        public enum Tap { Bag, Remnant, Material, Misc }
+
         public const int CategoryCapacity = 4;
+
         private readonly Inventory[] _inventories;
 
-        public Inventory this[ItemCategory category] => _inventories[(int)category];
+        public Inventory this[Tap category] => _inventories[(int)category];
 
         public CategoryInventory(int capacity)
         {

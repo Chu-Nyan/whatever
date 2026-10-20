@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Whatever.Entities.Items
 {
     public class ItemDefinitionData
@@ -6,5 +8,7 @@ namespace Whatever.Entities.Items
         public string NameKey;
         public string DescKey;
         public ItemCategory Category;
+
+        public Sprite Icon;
     }
 }

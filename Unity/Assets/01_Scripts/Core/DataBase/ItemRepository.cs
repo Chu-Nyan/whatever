@@ -1,3 +1,5 @@
+using Chunity.Core;
+using UnityEngine.U2D;
 using Whatever.Entities.Items;
 using Whatever.GameSystems.Stat;
 
@@ -21,6 +23,13 @@ namespace Whatever.Core
                 var equipment = EquipmentDefinition[i];
                 equipment.StatModifiers = equipmentStats[equipment.ID];
             }
+
+            var iconSprite = AssetManager.LoadAssetSync<SpriteAtlas>("ItemIcon");
+            for (int i = 1; i < ItemDefinition.Length; i++)
+            {
+                ItemDefinition[i].Icon = iconSprite.GetSprite($"Item_Icon_{ItemDefinition[i].ID:D3}");
+            }
+
         }
     }
 }
